@@ -60,7 +60,7 @@ if [ "${CMD}" = 'bootstrap' ]; then
 }
 fi
 
-# DEPLOY
+# DEPLOY / DESTROY
 
 if [ -z "${ENV+UNDEFINED}" ]; then
   readonly ENV='development'
@@ -73,16 +73,18 @@ if [ -z "${APP+UNDEFINED}" ]; then
   exit 1
 fi
 
-if [ -z "${STACK}" ]; then
-  echo 'invalid argument: --stack is required.'
-  exit 1
-fi
-
 if [ "${CMD}" = 'deploy' ]; then
 {
   npx cdk deploy \
     --app "node ${PROJECT_ROOT}/bin/${APP}.js" \
     --output "${PROJECT_ROOT}/cdk.out/${ENV}" \
-    "${STACK}-${ENV}"
+    "${APP}-${ENV}"
+}
+elif [ "${CMD}" = 'destroy' ]; then
+{
+  npx cdk destroy \
+    --app "node ${PROJECT_ROOT}/bin/${APP}.js" \
+    --output "${PROJECT_ROOT}/cdk.out/${ENV}" \
+    "${APP}-${ENV}"
 }
 fi
