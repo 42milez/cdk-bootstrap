@@ -58,14 +58,14 @@ if [ "${CMD}" = 'lint' ]; then
 }
 elif [ "${CMD}" = 'build' ]; then
 {
-  readonly LAYER_DIR="${PROJECT_ROOT}/layer.out/${ENV}/nodejs"
+  readonly LAMBDA_LAYER_DIR="${PROJECT_ROOT}/layer.out/${ENV}/nodejs"
 
-  mkdir -p "${LAYER_DIR}"
-  cp -p ./package{,-lock}.json "${LAYER_DIR}"
-  sed -i 's/file:\./file:\.\.\/\.\.\/\.\./g' "${LAYER_DIR}/package.json"
+  mkdir -p "${LAMBDA_LAYER_DIR}"
+  cp -p ./package{,-lock}.json "${LAMBDA_LAYER_DIR}"
+  sed -i 's/file:\./file:\.\.\/\.\.\/\.\./g' "${LAMBDA_LAYER_DIR}/package.json"
 
   # install packages without development dependencies
-  npm --prefix "${LAYER_DIR}" install --production
+  npm --prefix "${LAMBDA_LAYER_DIR}" install --production
 
   tsc
 }
