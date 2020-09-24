@@ -67,14 +67,14 @@ elif [ "${CMD}" = 'build' ]; then
   # install packages without development dependencies
   npm --prefix "${LAYER_DIR}" install --production
 
-  npm run build
+  tsc
 }
 elif [ "${CMD}" = 'test' ]; then
 {
-  npm run test
+  npx jest
 }
 elif [ "${CMD}" = 'snapshot' ]; then
 {
-  npm run snapshot
+  npx jest --updateSnapshot
 }
 fi
