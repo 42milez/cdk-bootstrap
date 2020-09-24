@@ -51,7 +51,7 @@ fi
 
 readonly CMD=$1
 
-##### BOOTSTRAP #####
+# BOOTSTRAP
 
 if [ "${CMD}" = 'bootstrap' ]; then
 {
@@ -60,7 +60,7 @@ if [ "${CMD}" = 'bootstrap' ]; then
 }
 fi
 
-##### DEPLOY #####
+# DEPLOY
 
 if [ -z "${ENV+UNDEFINED}" ]; then
   readonly ENV='development'
