@@ -7,6 +7,7 @@
   "scripts": {
     "build": "tsc",
     "cdk": "cdk",
+    "snapshot": "jest -- -u",
     "test": "jest",
     "watch": "tsc -w"
   },

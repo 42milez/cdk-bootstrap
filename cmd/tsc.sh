@@ -69,4 +69,12 @@ elif [ "${CMD}" = 'build' ]; then
 
   npm run build
 }
+elif [ "${CMD}" = 'test' ]; then
+{
+  npm run test
+}
+elif [ "${CMD}" = 'snapshot' ]; then
+{
+  npm run snapshot
+}
 fi
