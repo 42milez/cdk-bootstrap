@@ -2,8 +2,8 @@
 
 set -eu
 
-. './util/shellscript/read_yaml.sh'
-. './util/shellscript/verify_env.sh'
+. './lib/shellscript/read_yaml.sh'
+. './lib/shellscript/verify_env.sh'
 
 readonly PROJECT_ROOT=$(pwd)
 
