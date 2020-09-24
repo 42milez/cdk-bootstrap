@@ -64,7 +64,7 @@ elif [ "${CMD}" = 'build' ]; then
   cp -p ./package{,-lock}.json "${LAYER_DIR}"
   sed -i 's/file:\./file:\.\.\/\.\.\/\.\./g' "${LAYER_DIR}/package.json"
 
-  # ignore development dependencies
+  # install packages without development dependencies
   npm --prefix "${LAYER_DIR}" install --production
 
   npm run build
