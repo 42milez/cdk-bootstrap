@@ -3,4 +3,4 @@ option:
     --app: 'APP'                   # path of CDK application’s main stack
     --env: 'STACK_ENV'             # Environment
     --region: 'AWS_DEFAULT_REGION' # AWS Region
-    --stack: 'STACK'               # Stack Class Name
+    --stack: 'STACK'               # Stack Name
