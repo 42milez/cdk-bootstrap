@@ -5,8 +5,6 @@ set -eu
 . './util/shellscript/read_yaml.sh'
 . './util/shellscript/verify_env.sh'
 
-declare -xr AWS_PROFILE='42milez'
-
 #  Parse command-line options
 # --------------------------------------------------
 #  references:
@@ -38,10 +36,8 @@ set -- "${positional[@]}" # restore positional parameters
 #  Set defaults
 # --------------------------------------------------
 
-if [ -z "${AWS_DEFAULT_REGION+UNDEFINED}" ]; then
-  declare -xr AWS_DEFAULT_REGION='ap-northeast-1'
-else
-  export AWS_DEFAULT_REGION
+if [ -z "${ENV+UNDEFINED}" ]; then
+  readonly ENV='development'
 fi
 
 #  Command definitions
@@ -49,38 +45,26 @@ fi
 
 readonly CMD=$1
 
-##### BOOTSTRAP #####
-
-if [ "${CMD}" = 'bootstrap' ]; then
+if [ "${CMD}" = 'lint' ]; then
 {
-  npx cdk bootstrap --output "./cdk.out/bootstrap"
-  exit 0
+  find ./ -type f -name '*.ts' \
+    -not -path './cdk.out/*' \
+    -not -path './layer.out/*' \
+    -not -path './node_modules/*' \
+    -print0 \
+  | xargs -0 npx eslint
 }
-fi
-
-##### DEPLOY #####
-
-if [ -z "${ENV+UNDEFINED}" ]; then
-  readonly ENV='development'
-fi
-
-verify_env "${ENV}"
-
-if [ -z "${APP+UNDEFINED}" ]; then
-  echo 'invalid argument: --app is required.'
-  exit 1
-fi
-
-if [ -z "${STACK}" ]; then
-  echo 'invalid argument: --stack is required.'
-  exit 1
-fi
-
-if [ "${CMD}" = 'deploy' ]; then
+elif [ "${CMD}" = 'build' ]; then
 {
-  npx cdk deploy \
-    --app "node bin/${APP}.js" \
-    --output "./cdk.out/${ENV}" \
-    "${STACK}-${ENV}"
+  readonly LAYER_DIR="./layer.out/${ENV}/nodejs"
+
+  mkdir -p "${LAYER_DIR}"
+  cp -p ./package{,-lock}.json "${LAYER_DIR}"
+  sed -i 's/file:\./file:\.\.\/\.\.\/\.\./g' "${LAYER_DIR}/package.json"
+
+  # ignore development dependencies
+  npm --prefix "${LAYER_DIR}" install --production
+
+  npm run build
 }
 fi
