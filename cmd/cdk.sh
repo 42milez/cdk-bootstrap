@@ -55,36 +55,30 @@ readonly CMD=$1
 
 if [ "${CMD}" = 'bootstrap' ]; then
 {
-  npx cdk bootstrap --output "${PROJECT_ROOT}/cdk.out/bootstrap"
+  npx cdk bootstrap --app "node ${PROJECT_ROOT}/bin/cdk-bootstrap-2.js" --output "${PROJECT_ROOT}/cdk.out/bootstrap"
   exit 0
 }
 fi
 
 # DEPLOY / DESTROY
 
-if [ -z "${ENV+UNDEFINED}" ]; then
-  readonly ENV='development'
+if [ -z "${STACK_ENV+UNDEFINED}" ]; then
+  declare -xr STACK_ENV='development'
 fi
 
-verify_env "${ENV}"
+verify_env "${STACK_ENV}"
 
-if [ -z "${APP+UNDEFINED}" ]; then
-  echo 'invalid argument: --app is required.'
+if [ -z "${STACK+UNDEFINED}" ]; then
+  echo 'invalid argument: --stack is required.'
   exit 1
 fi
 
 if [ "${CMD}" = 'deploy' ]; then
 {
-  npx cdk deploy \
-    --app "node ${PROJECT_ROOT}/bin/${APP}.js" \
-    --output "${PROJECT_ROOT}/cdk.out/${ENV}" \
-    "${APP}-${ENV}"
+  npx cdk deploy --output "${PROJECT_ROOT}/cdk.out/${STACK_ENV}" "${STACK}-${STACK_ENV}"
 }
 elif [ "${CMD}" = 'destroy' ]; then
 {
-  npx cdk destroy \
-    --app "node ${PROJECT_ROOT}/bin/${APP}.js" \
-    --output "${PROJECT_ROOT}/cdk.out/${ENV}" \
-    "${APP}-${ENV}"
+  npx cdk destroy --output "${PROJECT_ROOT}/cdk.out/${STACK_ENV}" "${STACK}-${STACK_ENV}"
 }
 fi
