@@ -62,11 +62,11 @@ fi
 
 # DEPLOY / DESTROY
 
-if [ -z "${STACK_ENV+UNDEFINED}" ]; then
-  declare -xr STACK_ENV='development'
+if [ -z "${ENV+UNDEFINED}" ]; then
+  declare -xr ENV='development'
 fi
 
-verify_env "${STACK_ENV}"
+verify_env "${ENV}"
 
 if [ -z "${STACK+UNDEFINED}" ]; then
   echo 'invalid argument: --stack is required.'
@@ -75,10 +75,10 @@ fi
 
 if [ "${CMD}" = 'deploy' ]; then
 {
-  npx cdk deploy --output "${PROJECT_ROOT}/cdk.out/${STACK_ENV}" "${STACK}-${STACK_ENV}"
+  npx cdk deploy --output "${PROJECT_ROOT}/cdk.out/${ENV}" "${STACK}-${ENV}"
 }
 elif [ "${CMD}" = 'destroy' ]; then
 {
-  npx cdk destroy --output "${PROJECT_ROOT}/cdk.out/${STACK_ENV}" "${STACK}-${STACK_ENV}"
+  npx cdk destroy --output "${PROJECT_ROOT}/cdk.out/${ENV}" "${STACK}-${ENV}"
 }
 fi
