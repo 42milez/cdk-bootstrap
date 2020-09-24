@@ -5,13 +5,17 @@ set -eu
 . './util/shellscript/read_yaml.sh'
 . './util/shellscript/verify_env.sh'
 
+readonly PROJECT_ROOT=$(pwd)
+
+declare -xr AWS_PROFILE='42milez'
+
 #  Parse command-line options
 # --------------------------------------------------
 #  references:
 #    - How do I parse command line arguments in Bash?
 #      https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 
-readonly OPTION_FILE="./option.yml"
+readonly OPTION_FILE="${PROJECT_ROOT}/option.yml"
 readonly OPTION_ROOT='option.cdk'
 
 positional=()
@@ -36,8 +40,10 @@ set -- "${positional[@]}" # restore positional parameters
 #  Set defaults
 # --------------------------------------------------
 
-if [ -z "${ENV+UNDEFINED}" ]; then
-  readonly ENV='development'
+if [ -z "${AWS_DEFAULT_REGION+UNDEFINED}" ]; then
+  declare -xr AWS_DEFAULT_REGION='ap-northeast-1'
+else
+  export AWS_DEFAULT_REGION
 fi
 
 #  Command definitions
@@ -45,26 +51,38 @@ fi
 
 readonly CMD=$1
 
-if [ "${CMD}" = 'lint' ]; then
+##### BOOTSTRAP #####
+
+if [ "${CMD}" = 'bootstrap' ]; then
 {
-  find ./ -type f -name '*.ts' \
-    -not -path './cdk.out/*' \
-    -not -path './layer.out/*' \
-    -not -path './node_modules/*' \
-    -print0 \
-  | xargs -0 npx eslint
+  npx cdk bootstrap --output "${PROJECT_ROOT}/cdk.out/bootstrap"
+  exit 0
 }
-elif [ "${CMD}" = 'build' ]; then
+fi
+
+##### DEPLOY #####
+
+if [ -z "${ENV+UNDEFINED}" ]; then
+  readonly ENV='development'
+fi
+
+verify_env "${ENV}"
+
+if [ -z "${APP+UNDEFINED}" ]; then
+  echo 'invalid argument: --app is required.'
+  exit 1
+fi
+
+if [ -z "${STACK}" ]; then
+  echo 'invalid argument: --stack is required.'
+  exit 1
+fi
+
+if [ "${CMD}" = 'deploy' ]; then
 {
-  readonly LAYER_DIR="./layer.out/${ENV}/nodejs"
-
-  mkdir -p "${LAYER_DIR}"
-  cp -p ./package{,-lock}.json "${LAYER_DIR}"
-  sed -i 's/file:\./file:\.\.\/\.\.\/\.\./g' "${LAYER_DIR}/package.json"
-
-  # ignore development dependencies
-  npm --prefix "${LAYER_DIR}" install --production
-
-  npm run build
+  npx cdk deploy \
+    --app "node ${PROJECT_ROOT}/bin/${APP}.js" \
+    --output "${PROJECT_ROOT}/cdk.out/${ENV}" \
+    "${STACK}-${ENV}"
 }
 fi
