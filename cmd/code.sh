@@ -67,7 +67,7 @@ elif [ "${CMD}" = 'build' ]; then
   # install packages without development dependencies
   npm --prefix "${LAMBDA_LAYER_DIR}" install --production
 
-  tsc
+  npx tsc
 }
 elif [ "${CMD}" = 'test' ]; then
 {
