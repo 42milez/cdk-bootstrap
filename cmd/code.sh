@@ -46,6 +46,8 @@ readonly NPM_CMD='docker-compose run --rm npm'
 readonly NPX_CMD='docker-compose run --rm npx'
 readonly CMD=$1
 
+# LINT
+
 if [ "${CMD}" = 'lint' ]; then
 {
   targets=()
@@ -65,7 +67,19 @@ if [ "${CMD}" = 'lint' ]; then
   # shellcheck disable=SC2086
   $NPX_CMD eslint ${targets[*]}
 }
-elif [ "${CMD}" = 'build' ]; then
+fi
+
+# BUILD / TEST / SNAPSHOT
+
+if [ -z "${ENV+UNDEFINED}" ]; then
+{
+  readonly ENV='development'
+}
+fi
+
+verify_env "${ENV}"
+
+if [ "${CMD}" = 'build' ]; then
 {
   readonly LAMBDA_LAYER_DIR="layer.out/${ENV}/nodejs"
 
@@ -85,5 +99,9 @@ elif [ "${CMD}" = 'test' ]; then
 elif [ "${CMD}" = 'snapshot' ]; then
 {
   $NPX_CMD jest --updateSnapshot
+}
+else
+{
+  echo "invalid command: ${CMD} is not defined"
 }
 fi
