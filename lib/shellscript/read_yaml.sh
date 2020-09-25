@@ -1,6 +1,7 @@
 #!/bin/bash
 
-read_yaml() {
+read_yaml()
+{
   readonly FILE_PATH=$1
   readonly KEY=$2
 

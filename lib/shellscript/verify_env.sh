@@ -1,6 +1,7 @@
 #!/bin/bash
 
-verify_env() {
+verify_env()
+{
   local DEVELOPMENT='development'
   local STAGING='staging'
   local PRODUCTION='production'
