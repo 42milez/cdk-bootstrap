@@ -29,7 +29,7 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-set -- "${positional[@]}" # restore positional parameters
+set -- "${positional[@]}"
 
 #  Set defaults
 # --------------------------------------------------
