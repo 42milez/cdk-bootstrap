@@ -10,23 +10,23 @@ readonly PROJECT_ROOT=$(pwd)
 #  Parse command-line options
 # --------------------------------------------------
 
-readonly OPTION_FILE="${PROJECT_ROOT}/cmd/option.yml"
-
 positional=()
 
 while [ $# -gt 0 ]; do
-  opt=$(read_yaml "${OPTION_FILE}" "code.$1")
+  opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "code.$1")
 
+  # skip positional argument
   if [ -z "${opt}" ]; then
     positional+=("$1")
-    shift # past option
+    shift
     continue
   fi
 
+  # define variable
   eval "readonly ${opt}=$2"
 
-  shift # past key
-  shift # past value
+  shift
+  shift
 done
 
 set -- "${positional[@]}" # restore positional parameters
