@@ -1,7 +1,7 @@
 import { Construct, Stack } from '@aws-cdk/core';
 import { Effect, PolicyDocument, PolicyStatement, Role, ServicePrincipal } from '@aws-cdk/aws-iam';
 
-export function createRoles (scope: Construct): { [key:string]:Role } {
+export function createRoles (scope: Construct, id: string): { [key:string]:Role } {
     return {
         lambdaRole: new Role(scope, 'LambdaRole', {
             assumedBy: new ServicePrincipal('lambda.amazonaws.com', {
@@ -33,7 +33,7 @@ export function createRoles (scope: Construct): { [key:string]:Role } {
                     ]
                 })
             },
-            roleName: `lambda-${process.env.APP_NAME}-${process.env.ENV}`
+            roleName: `lambda-${id}`
             // externalId: -
             // externalIds: -
             // managedPolicies: -

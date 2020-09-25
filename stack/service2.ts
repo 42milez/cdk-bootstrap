@@ -6,17 +6,17 @@ import { createLogs } from './resources/service2/logs';
 import { createRoles } from './resources/service2/role';
 
 export class Service2Stack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: cdk.Construct, id: string, env: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     // IAM Roles
-    const roles = createRoles(this);
+    const roles = createRoles(this, id);
 
     // Lambda Layers
-    const layers = createLayers(this);
+    const layers = createLayers(this, id, env);
 
     // Lambda Functions
-    const functions = createFunctions(this, roles, layers);
+    const functions = createFunctions(this, id, roles, layers);
 
     // Log Groups
     createLogs(this, functions);
