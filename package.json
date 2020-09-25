@@ -1,6 +1,12 @@
 {
   "name": "cdk-bootstrap",
   "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:42milez/cdk-bootstrap.git"
+  },
+  "description": "Bootstrap for AWS CDK project.",
+  "license": "MIT",
   "bin": {
     "cdk-bootstrap": "bin/cdk-bootstrap.js"
   },
