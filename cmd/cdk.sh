@@ -22,14 +22,14 @@ while [ $# -gt 0 ]; do
 
   if [ -z "${opt}" ]; then
     positional+=("$1")
-    shift # past option
+    shift
     continue
   fi
 
   eval "readonly ${opt}=$2"
 
-  shift # past key
-  shift # past value
+  shift
+  shift
 done
 
 set -- "${positional[@]}" # restore positional parameters
@@ -37,7 +37,7 @@ set -- "${positional[@]}" # restore positional parameters
 #  Set defaults
 # --------------------------------------------------
 
-if [ -z "${AWS_PROFILE}" ]; then
+if [ -z "${AWS_PROFILE+UNDEFINED}" ]; then
   readonly AWS_PROFILE=$(read_yaml"${CONFIG_FILE}" 'cli.profile')
   export AWS_PROFILE
 fi

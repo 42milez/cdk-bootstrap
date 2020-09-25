@@ -14,12 +14,11 @@ readonly PROJECT_ROOT=$(pwd)
 #      https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 
 readonly OPTION_FILE="${PROJECT_ROOT}/cmd/option.yml"
-readonly OPTION_ROOT='code'
 
 positional=()
 
 while [ $# -gt 0 ]; do
-  opt=$(read_yaml "${OPTION_FILE}" "${OPTION_ROOT}.$1")
+  opt=$(read_yaml "${OPTION_FILE}" "code.$1")
 
   if [ -z "${opt}" ]; then
     positional+=("$1")
