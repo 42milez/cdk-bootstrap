@@ -10,8 +10,8 @@ readonly PROJECT_ROOT=$(pwd)
 #  Parse command-line options
 # --------------------------------------------------
 #  references:
-#    - How do I parse command line arguments in Bash?
-#      https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
+#  - How do I parse command line arguments in Bash?
+#    https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 
 readonly OPTION_FILE="${PROJECT_ROOT}/cmd/option.yml"
 
