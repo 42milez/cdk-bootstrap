@@ -35,8 +35,10 @@ set -- "${positional[@]}" # restore positional parameters
 #  Set defaults
 # --------------------------------------------------
 
+readonly CONFIG_FILE="${PROJECT_ROOT}/cmd/config.yml"
+
 if [ -z "${AWS_PROFILE+UNDEFINED}" ]; then
-  readonly AWS_PROFILE=$(read_yaml"${CONFIG_FILE}" 'cli.profile')
+  readonly AWS_PROFILE=$(read_yaml "${CONFIG_FILE}" 'cli.profile')
   export AWS_PROFILE
 fi
 
@@ -56,10 +58,8 @@ readonly CMD=$1
 # BOOTSTRAP
 
 if [ "${CMD}" = 'bootstrap' ]; then
-{
   npx cdk bootstrap --app "node ${PROJECT_ROOT}/bin/cdk-bootstrap-2.js" --output "${PROJECT_ROOT}/cdk.out/bootstrap"
   exit 0
-}
 fi
 
 # DEPLOY / DESTROY
@@ -76,11 +76,11 @@ if [ -z "${STACK+UNDEFINED}" ]; then
 fi
 
 if [ "${CMD}" = 'deploy' ]; then
-{
   npx cdk deploy --output "${PROJECT_ROOT}/cdk.out/${ENV}" "${STACK}-${ENV}"
-}
 elif [ "${CMD}" = 'destroy' ]; then
-{
   npx cdk destroy --output "${PROJECT_ROOT}/cdk.out/${ENV}" "${STACK}-${ENV}"
-}
+elif [ "${CMD}" = 'synth' ]; then
+  npx cdk synth --output "${PROJECT_ROOT}/cdk.out/${ENV}" "${STACK}-${ENV}"
+else
+  echo "invalid command: ${CMD} is not defined"
 fi
