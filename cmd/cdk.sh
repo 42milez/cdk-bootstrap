@@ -64,7 +64,7 @@ readonly CMD=$1
 
 if [ "${CMD}" = 'bootstrap' ]; then
 {
-  $CDK_CMD bootstrap -o "${PROJECT_ROOT}/cdk.out/bootstrap"
+  $CDK_CMD bootstrap -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/bootstrap"
   exit 0
 }
 fi
@@ -81,7 +81,7 @@ verify_env "${ENV}"
 
 if [ "${CMD}" = 'list' ]; then
 {
-  $CDK_CMD list -o "${PROJECT_ROOT}/cdk.out/${ENV}" -c "env=${ENV}"
+  $CDK_CMD list -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}"
   exit 0
 }
 fi
@@ -95,15 +95,24 @@ fi
 
 if [ "${CMD}" = 'deploy' ]; then
 {
-  $CDK_CMD deploy -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" "${STACK}-${ENV}"
+  $CDK_CMD deploy                              \
+    -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" \
+    -c "env=${ENV}"                            \
+    "${STACK}-${ENV}"
 }
 elif [ "${CMD}" = 'destroy' ]; then
 {
-  $CDK_CMD destroy -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" "${STACK}-${ENV}"
+  $CDK_CMD destroy                             \
+    -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" \
+    -c "env=${ENV}"                            \
+    "${STACK}-${ENV}"
 }
 elif [ "${CMD}" = 'synth' ]; then
 {
-  $CDK_CMD cdk synth -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" "${STACK}-${ENV}"
+  $CDK_CMD cdk synth                           \
+    -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" \
+    -c "env=${ENV}"                            \
+    "${STACK}-${ENV}"
 }
 else
 {

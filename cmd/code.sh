@@ -56,12 +56,12 @@ if [ "${CMD}" = 'lint' ]; then
   {
     targets+=("$(echo "${path}" | perl -pe "s|${PROJECT_ROOT}|${DOCKER_WORK_DIR}|g")")
   }
-  done < <(find \
-    "${PROJECT_ROOT}" \
-    -type f \
-    -name '*.ts' \
-    -not -path "${PROJECT_ROOT}/cdk.out/*" \
-    -not -path "${PROJECT_ROOT}/layer.out/*" \
+  done < <(find                                 \
+    "${PROJECT_ROOT}"                           \
+    -type f                                     \
+    -name '*.ts'                                \
+    -not -path "${PROJECT_ROOT}/cdk.out/*"      \
+    -not -path "${PROJECT_ROOT}/layer.out/*"    \
     -not -path "${PROJECT_ROOT}/node_modules/*")
 
   # shellcheck disable=SC2086
