@@ -9,14 +9,19 @@ services:
     image: 'base-cdk-bootstrap:latest'
     stdin_open: true
     tty: true
-    volumes:
-      - '.:/var/project'
   cdk:
     <<: *shared
     entrypoint: 'npx cdk'
+    volumes:
+      - '~/.aws:/root/.aws'
+      - '.:/var/project'
   npm:
     <<: *shared
     entrypoint: 'npm'
+    volumes:
+      - '.:/var/project'
   npx:
     <<: *shared
     entrypoint: 'npx'
+    volumes:
+      - '.:/var/project'
