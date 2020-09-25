@@ -9,20 +9,11 @@ services:
     image: 'base-cdk-bootstrap:latest'
     stdin_open: true
     tty: true
+    volumes:
+      - '.:/var/project'
   cdk:
     <<: *shared
     entrypoint: 'npx cdk'
-    volumes:
-      # READ ONLY
-      - './bin:/var/project/bin:ro'
-      - './cmd:/var/project/cmd:ro'
-      - './lib:/var/project/lib:ro'
-      - './src:/var/project/src:ro'
-      - './stack:/var/project/stack:ro'
-      - './cdk.json:/var/project/cdk.json:ro'
-      # WRITABLE
-      - './cdk.out:/var/project/cdk.out'
-      - './layer.out:/var/project/layer.out'
   npm:
     <<: *shared
     entrypoint: 'npm'

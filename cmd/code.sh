@@ -41,36 +41,49 @@ fi
 #  Command definitions
 # --------------------------------------------------
 
+readonly DOCKER_WORK_DIR='/var/project'
+readonly NPM_CMD='docker-compose run --rm npm'
+readonly NPX_CMD='docker-compose run --rm npx'
 readonly CMD=$1
 
 if [ "${CMD}" = 'lint' ]; then
 {
-  find "${PROJECT_ROOT}" -type f -name '*.ts' \
-    -not -path "/cdk.out/*" \
+  targets=()
+
+  while read -r path; do
+  {
+    targets+=("$(echo "${path}" | perl -pe "s|${PROJECT_ROOT}|${DOCKER_WORK_DIR}|g")")
+  }
+  done < <(find \
+    "${PROJECT_ROOT}" \
+    -type f \
+    -name '*.ts' \
+    -not -path "${PROJECT_ROOT}/cdk.out/*" \
     -not -path "${PROJECT_ROOT}/layer.out/*" \
-    -not -path "${PROJECT_ROOT}/node_modules/*" \
-    -print0 \
-  | xargs -0 npx eslint
+    -not -path "${PROJECT_ROOT}/node_modules/*")
+
+  # shellcheck disable=SC2086
+  $NPX_CMD eslint ${targets[*]}
 }
 elif [ "${CMD}" = 'build' ]; then
 {
-  readonly LAMBDA_LAYER_DIR="${PROJECT_ROOT}/layer.out/${ENV}/nodejs"
+  readonly LAMBDA_LAYER_DIR="layer.out/${ENV}/nodejs"
 
   mkdir -p "${LAMBDA_LAYER_DIR}"
   cp -p ./package{,-lock}.json "${LAMBDA_LAYER_DIR}"
-  sed -i 's/file:\./file:\.\.\/\.\.\/\.\./g' "${LAMBDA_LAYER_DIR}/package.json"
+  sed -i 's/file:\./file:\.\.\/\.\.\/\.\./g' "${PROJECT_ROOT}/${LAMBDA_LAYER_DIR}/package.json"
 
   # install packages without development dependencies
-  npm --prefix "${LAMBDA_LAYER_DIR}" install --production
+  $NPM_CMD --prefix "${DOCKER_WORK_DIR}/${LAMBDA_LAYER_DIR}" install --production
 
-  npx tsc
+  $NPX_CMD tsc
 }
 elif [ "${CMD}" = 'test' ]; then
 {
-  npx jest
+  $NPX_CMD jest
 }
 elif [ "${CMD}" = 'snapshot' ]; then
 {
-  npx jest --updateSnapshot
+  $NPX_CMD jest --updateSnapshot
 }
 fi

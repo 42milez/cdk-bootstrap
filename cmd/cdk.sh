@@ -54,14 +54,14 @@ export AWS_DEFAULT_REGION
 #  Command definitions
 # --------------------------------------------------
 
-readonly NPX="docker run --rm -v ${PROJECT_ROOT}:/tmp/npm -w /tmp/npm node:14.11.0-alpine3.11 npx"
+readonly CDK='docker-compose run --rm cdk'
 readonly CMD=$1
 
 # BOOTSTRAP
 
 if [ "${CMD}" = 'bootstrap' ]; then
 {
-  npx cdk bootstrap -o "${PROJECT_ROOT}/cdk.out/bootstrap"
+  $CDK bootstrap -o "${PROJECT_ROOT}/cdk.out/bootstrap"
   exit 0
 }
 fi
@@ -78,7 +78,7 @@ verify_env "${ENV}"
 
 if [ "${CMD}" = 'list' ]; then
 {
-  $NPX cdk list -o "${PROJECT_ROOT}/cdk.out/${ENV}" -c "env=${ENV}"
+  $CDK list -o "${PROJECT_ROOT}/cdk.out/${ENV}" -c "env=${ENV}"
   exit 0
 }
 fi
@@ -92,15 +92,15 @@ fi
 
 if [ "${CMD}" = 'deploy' ]; then
 {
-  $NPX cdk deploy -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" "${STACK}-${ENV}"
+  $CDK deploy -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" "${STACK}-${ENV}"
 }
 elif [ "${CMD}" = 'destroy' ]; then
 {
-  $NPX cdk destroy -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" "${STACK}-${ENV}"
+  $CDK destroy -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" "${STACK}-${ENV}"
 }
 elif [ "${CMD}" = 'synth' ]; then
 {
-  $NPX cdk synth -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" "${STACK}-${ENV}"
+  $CDK cdk synth -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" "${STACK}-${ENV}"
 }
 else
 {
