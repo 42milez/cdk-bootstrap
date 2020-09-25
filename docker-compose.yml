@@ -14,14 +14,18 @@ services:
     entrypoint: 'npx cdk'
     volumes:
       - '~/.aws:/root/.aws'
-      - '.:/var/project'
+      - '.:/var/project:delegated'
   npm:
     <<: *shared
     entrypoint: 'npm'
     volumes:
-      - '.:/var/project'
+      - '.:/var/project:delegated'
   npx:
     <<: *shared
     entrypoint: 'npx'
     volumes:
-      - '.:/var/project'
+      - '.:/var/project:delegated'
+
+# References:
+# - Performance tuning for volume mounts (shared filesystems)
+#   https://docs.docker.com/docker-for-mac/osxfs-caching

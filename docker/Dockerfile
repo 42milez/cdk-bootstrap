@@ -1,5 +1,7 @@
 FROM node:14.11.0-alpine3.12
 
+ENV NODE_ENV 'development'
+
 RUN \
     # Update repository indexes from all remote repositories
     apk update \
