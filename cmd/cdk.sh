@@ -6,6 +6,7 @@ set -eu
 . './lib/shellscript/verify_env.sh'
 
 readonly PROJECT_ROOT=$(pwd)
+readonly CDK_OUT_DIR='cdk.out'
 
 #  Parse command-line options
 # --------------------------------------------------
@@ -53,34 +54,56 @@ export AWS_DEFAULT_REGION
 #  Command definitions
 # --------------------------------------------------
 
+readonly NPX="docker run --rm -v ${PROJECT_ROOT}:/tmp/npm -w /tmp/npm node:14.11.0-alpine3.11 npx"
 readonly CMD=$1
 
 # BOOTSTRAP
 
 if [ "${CMD}" = 'bootstrap' ]; then
-  npx cdk bootstrap --app "node ${PROJECT_ROOT}/bin/cdk-bootstrap-2.js" --output "${PROJECT_ROOT}/cdk.out/bootstrap"
+{
+  npx cdk bootstrap -o "${PROJECT_ROOT}/cdk.out/bootstrap"
   exit 0
+}
 fi
 
-# DEPLOY / DESTROY
+# LIST / DEPLOY / DESTROY / SYNTH
 
 if [ -z "${ENV+UNDEFINED}" ]; then
-  declare -xr ENV='development'
+{
+  readonly ENV='development'
+}
 fi
 
 verify_env "${ENV}"
 
+if [ "${CMD}" = 'list' ]; then
+{
+  $NPX cdk list -o "${PROJECT_ROOT}/cdk.out/${ENV}" -c "env=${ENV}"
+  exit 0
+}
+fi
+
 if [ -z "${STACK+UNDEFINED}" ]; then
+{
   echo 'invalid argument: --stack is required.'
   exit 1
+}
 fi
 
 if [ "${CMD}" = 'deploy' ]; then
-  npx cdk deploy --output "${PROJECT_ROOT}/cdk.out/${ENV}" "${STACK}-${ENV}"
+{
+  $NPX cdk deploy -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" "${STACK}-${ENV}"
+}
 elif [ "${CMD}" = 'destroy' ]; then
-  npx cdk destroy --output "${PROJECT_ROOT}/cdk.out/${ENV}" "${STACK}-${ENV}"
+{
+  $NPX cdk destroy -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" "${STACK}-${ENV}"
+}
 elif [ "${CMD}" = 'synth' ]; then
-  npx cdk synth --output "${PROJECT_ROOT}/cdk.out/${ENV}" "${STACK}-${ENV}"
+{
+  $NPX cdk synth -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" "${STACK}-${ENV}"
+}
 else
+{
   echo "invalid command: ${CMD} is not defined"
+}
 fi

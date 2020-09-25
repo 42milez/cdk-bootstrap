@@ -10,6 +10,6 @@ verify_env()
     "${DEVELOPMENT}") : 'valid' ;;
     "${STAGING}") : 'valid' ;;
     "${PRODUCTION}") : 'valid' ;;
-    *) ConsoleError "invalid environment: ${DEVELOPMENT}, ${STAGING} or ${PRODUCTION} is available" && exit 1 ;;
+    *) echo "invalid environment: ${DEVELOPMENT}, ${STAGING} or ${PRODUCTION} is available" && exit 1 ;;
   esac
 }
