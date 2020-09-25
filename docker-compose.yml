@@ -14,7 +14,7 @@ services:
     entrypoint: 'npx cdk'
     volumes:
       - '~/.aws:/root/.aws'
-      - '.:/var/project:delegated'
+      - '.:/var/project'
   npm:
     <<: *shared
     entrypoint: 'npm'
