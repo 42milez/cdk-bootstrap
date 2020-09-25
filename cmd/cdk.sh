@@ -7,21 +7,18 @@ set -eu
 
 readonly PROJECT_ROOT=$(pwd)
 
-declare -xr AWS_PROFILE='42milez'
-
 #  Parse command-line options
 # --------------------------------------------------
 #  references:
 #    - How do I parse command line arguments in Bash?
 #      https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 
-readonly OPTION_FILE="${PROJECT_ROOT}/option.yml"
-readonly OPTION_ROOT='option.cdk'
+readonly OPTION_FILE="${PROJECT_ROOT}/cmd/option.yml"
 
 positional=()
 
 while [ $# -gt 0 ]; do
-  opt=$(read_yaml "${OPTION_FILE}" "${OPTION_ROOT}.$1")
+  opt=$(read_yaml "${OPTION_FILE}" "cdk.$1")
 
   if [ -z "${opt}" ]; then
     positional+=("$1")
@@ -40,11 +37,18 @@ set -- "${positional[@]}" # restore positional parameters
 #  Set defaults
 # --------------------------------------------------
 
+if [ -z "${AWS_PROFILE}" ]; then
+  readonly AWS_PROFILE=$(read_yaml"${CONFIG_FILE}" 'cli.profile')
+  export AWS_PROFILE
+fi
+
 if [ -z "${AWS_DEFAULT_REGION+UNDEFINED}" ]; then
-  declare -xr AWS_DEFAULT_REGION='ap-northeast-1'
-else
+  readonly AWS_DEFAULT_REGION=$(read_yaml "${CONFIG_FILE}" 'cli.region')
   export AWS_DEFAULT_REGION
 fi
+
+export AWS_PROFILE
+export AWS_DEFAULT_REGION
 
 #  Command definitions
 # --------------------------------------------------

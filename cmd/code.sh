@@ -13,8 +13,8 @@ readonly PROJECT_ROOT=$(pwd)
 #    - How do I parse command line arguments in Bash?
 #      https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 
-readonly OPTION_FILE="${PROJECT_ROOT}/option.yml"
-readonly OPTION_ROOT='option.cdk'
+readonly OPTION_FILE="${PROJECT_ROOT}/cmd/option.yml"
+readonly OPTION_ROOT='code'
 
 positional=()
 
