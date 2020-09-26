@@ -14,6 +14,7 @@ readonly PROJECT_ROOT=$(pwd)
 positional=()
 
 while [ $# -gt 0 ]; do
+{
   opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "code.$1")
 
   # skip positional argument
@@ -28,6 +29,7 @@ while [ $# -gt 0 ]; do
 
   shift
   shift
+}
 done
 
 set -- "${positional[@]}"
