@@ -166,7 +166,7 @@ Object {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
               "Principal": Object {
-                "Service": "function.amazonaws.com",
+                "Service": "lambda.amazonaws.com",
               },
             },
           ],
