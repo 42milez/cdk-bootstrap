@@ -1,14 +1,33 @@
-# Welcome to your CDK TypeScript project!
+## cdk-bootstrap
 
-This is a blank project for TypeScript development with CDK.
+[![Build Status](https://travis-ci.org/42milez/cdk-bootstrap.svg?branch=master)](https://travis-ci.org/42milez/cdk-bootstrap)
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+### Checking Code Style
 
-## Useful commands
+```
+./cmd/code.sh lint
+```
 
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+### Building Sources
+
+```
+./cmd/code.sh build
+```
+
+### Deploying the CDK toolkit stack
+
+```
+./cmd/cdk.sh bootstrap
+```
+
+### Deploying the stacks
+
+```
+./cmd/cdk.sh deploy --env development --stack 'service1,service2'
+```
+
+### Destroying the stacks
+
+```
+./cmd/cdk.sh destroy --env development --stack 'service1,service2'
+```
