@@ -41,7 +41,6 @@
   },
   "dependencies": {
     "@aws-cdk/core": "^1.64.0",
-    "base-layer-cdk-bootstrap": "file:./src/lambda/base",
     "source-map-support": "^0.5.19"
   }
 }

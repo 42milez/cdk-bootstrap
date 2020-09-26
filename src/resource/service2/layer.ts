@@ -7,7 +7,7 @@ export function createLayers (scope: Construct, id: string, env: string): {[key:
             compatibleRuntimes: [
                 Runtime.NODEJS_12_X
             ],
-            code: Code.fromAsset(`layer.out/${env}`),
+            code: Code.fromAsset(`layer.out/${env}/base`),
             description: 'Base Layer',
             layerVersionName: `base-layer-${id}`
             // license: -

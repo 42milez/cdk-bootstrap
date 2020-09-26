@@ -1,7 +1,7 @@
 import { SynthUtils } from '@aws-cdk/assert';
 import { App } from '@aws-cdk/core';
 
-import { Service2Stack } from '../../stack/service2';
+import { Service2Stack } from '../../src/stack/service2';
 
 test('Service2 Snapshot Test', () => {
     const app = new App();

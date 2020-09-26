@@ -1,9 +1,9 @@
 import * as cdk from '@aws-cdk/core';
 
-import { createFunctions } from './resources/service2/lambda';
-import { createLayers } from './resources/service2/layer';
-import { createLogs } from './resources/service2/logs';
-import { createRoles } from './resources/service2/role';
+import { createFunctions } from '../resource/service2/lambda';
+import { createLayers } from '../resource/service2/layer';
+import { createLogs } from '../resource/service2/logs';
+import { createRoles } from '../resource/service2/role';
 
 export class Service2Stack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, env: string, props?: cdk.StackProps) {

@@ -81,11 +81,32 @@ verify_env "${ENV}"
 
 if [ "${CMD}" = 'build' ]; then
 {
-  readonly LAMBDA_LAYER_DIR="layer.out/${ENV}/nodejs"
+  readonly LAMBDA_LAYER_SRC_DIR="${PROJECT_ROOT}/src/function/layer"
+  readonly LAMBDA_LAYER_DEST_DIR="${DOCKER_WORK_DIR}/layer.out/${ENV}"
 
-  mkdir -p "${LAMBDA_LAYER_DIR}"
-  cp -p ./package{,-lock}.json "${LAMBDA_LAYER_DIR}"
-  sed -i 's/file:\./file:\.\.\/\.\.\/\.\./g' "${PROJECT_ROOT}/${LAMBDA_LAYER_DIR}/package.json"
+  while read -r dir; do
+  {
+    install_dir="${LAMBDA_LAYER_DEST_DIR}/${dir}/nodejs"
+    mkdir -p "${install_dir}"
+    cp "${LAMBDA_LAYER_SRC_DIR}/${dir}/package.json" "${install_dir}"
+
+    # add 'dependencies' member if not exists
+    if [ "$(jq '.dependencies?' "${install_dir}/package.json")" = 'null' ]; then
+    {
+      cat < "${install_dir}/package.json"                                   \
+        | jq ". |= .+ {\"dependencies\": {}}"                               \
+        > "${install_dir}/package-tmp.json"                                 \
+      && mv "${install_dir}/package-tmp.json" "${install_dir}/package.json"
+    }
+    fi
+
+    # add self as a dependency
+    cat < "${install_dir}/package.json"                                                    \
+      | jq ".dependencies |= .+ {\"self\": \"${PROJECT_ROOT}/src/function/layer/${dir}\"}" \
+      > "${install_dir}/package-tmp.json"                                                  \
+    && mv "${install_dir}/package-tmp.json" "${install_dir}/package.json"
+  }
+  done < <(find "${LAMBDA_LAYER_SRC_DIR}" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
 
   # install packages without development dependencies
   $NPM_CMD --prefix "${DOCKER_WORK_DIR}/${LAMBDA_LAYER_DIR}" install --production

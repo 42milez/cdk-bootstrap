@@ -4,11 +4,11 @@ import { Effect, PolicyDocument, PolicyStatement, Role, ServicePrincipal } from 
 export function createRoles (scope: Construct, id: string): { [key:string]:Role } {
     return {
         lambdaRole: new Role(scope, 'LambdaRole', {
-            assumedBy: new ServicePrincipal('lambda.amazonaws.com', {
+            assumedBy: new ServicePrincipal('function.amazonaws.com', {
                 // conditions: -
                 // region: -
             }),
-            description: 'Hello World',
+            description: 'Hello CDK',
             inlinePolicies: {
                 logs: new PolicyDocument({
                     // assignSids: -

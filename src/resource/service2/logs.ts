@@ -7,8 +7,8 @@ import { getRetentionDays } from '../../../lib/cdk/logs_helper';
 
 export function createLogs (scope: Construct, functions: {[key:string]: Function}) {
     return {
-        helloWorldFunctionLogGroup: new LogGroup(scope, 'HelloWorldFunctionLogGroup', {
-            logGroupName: '/aws/lambda/' + functions.helloWorld.functionName,
+        helloCdkFunctionLogGroup: new LogGroup(scope, 'HelloCdkFunctionLogGroup', {
+            logGroupName: '/aws/function/' + functions.hello.functionName,
             retention: getRetentionDays()
         })
     };
