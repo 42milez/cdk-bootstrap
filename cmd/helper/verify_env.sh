@@ -2,13 +2,15 @@
 
 verify_env()
 {
+  local CURRENT_DIR="$(pwd)"
+
   local DEVELOPMENT
   local STAGING
   local PRODUCTION
 
-  DEVELOPMENT=$(cat <'../config.yml' | yq r - 'env.development')
-  STAGING=$(cat <'../config.yml' | yq r - 'env.staging')
-  PRODUCTION=$(cat <'../config.yml' | yq r - 'env.production')
+  DEVELOPMENT=$(cat <"${CURRENT_DIR}/cmd/config.yml" | yq r - 'env.development')
+  STAGING=$(cat <"${CURRENT_DIR}/cmd/config.yml" | yq r - 'env.staging')
+  PRODUCTION=$(cat <"${CURRENT_DIR}/cmd/config.yml" | yq r - 'env.production')
 
   case $1 in
     "${DEVELOPMENT}") : 'valid' ;;

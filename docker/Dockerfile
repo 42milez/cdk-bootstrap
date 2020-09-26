@@ -2,14 +2,18 @@ FROM node:14.11.0-alpine3.12
 
 ENV NODE_ENV 'development'
 
-RUN \
-    # Update repository indexes from all remote repositories
-    apk update \
-    # Install packages
-    && apk add --no-cache \
-        bash='5.0.17-r0' \
-        build-base='0.5-r2' \
-    && rm -rf '/var/cache/apk/*'
+RUN apk update          \
+  && apk add --no-cache \
+    bash                \
+    bats                \
+    build-base          \
+    curl                \
+  && rm -rf '/var/cache/apk/*'
+
+ARG YQ_RELEASE='https://github.com/mikefarah/yq/releases/download/3.4.0/yq_linux_amd64'
+ARG YQ_INSTALL_PATH='/usr/local/bin/yq'
+
+RUN curl -fsSL $YQ_RELEASE -o $YQ_INSTALL_PATH && chmod 0755 $YQ_INSTALL_PATH
 
 ARG PROJECT_ROOT='/var/project'
 

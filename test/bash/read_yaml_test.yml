@@ -1,0 +1,6 @@
+obj:
+  array:
+    - 1
+    - 2
+    - 3
+  string: 'Hello YAML'
