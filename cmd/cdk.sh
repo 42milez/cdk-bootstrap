@@ -100,26 +100,38 @@ if [ -z "${STACK+UNDEFINED}" ]; then
 }
 fi
 
+stacks=()
+
+# shellcheck disable=SC2207,SC2116
+while read -r s; do
+{
+  stacks+=("${s}-${ENV}")
+}
+done < <(echo "$(IFS=',' tmp=($(echo "${STACK}")) ; printf '%s\n' "${tmp[@]}")")
+
 if [ "${CMD}" = 'deploy' ]; then
 {
+  # shellcheck disable=SC2086
   $CDK_CMD deploy                              \
     -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" \
     -c "env=${ENV}"                            \
-    "${STACK}-${ENV}"
+    ${stacks[*]}
 }
 elif [ "${CMD}" = 'destroy' ]; then
 {
+  # shellcheck disable=SC2086
   $CDK_CMD destroy                             \
     -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" \
     -c "env=${ENV}"                            \
-    "${STACK}-${ENV}"
+    ${stacks[*]}
 }
 elif [ "${CMD}" = 'synth' ]; then
 {
+  # shellcheck disable=SC2086
   $CDK_CMD cdk synth                           \
     -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" \
     -c "env=${ENV}"                            \
-    "${STACK}-${ENV}"
+    ${stacks[*]}
 }
 else
 {
