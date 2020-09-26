@@ -45,7 +45,7 @@ fi
 readonly DOCKER_WORK_DIR='/var/project'
 readonly CMD=$1
 
-if "${CI}"; then
+if "${CI=false}"; then
   readonly BASH_CMD='bash'
   readonly NPX_CMD='npx'
 else
@@ -95,6 +95,9 @@ if [ "${CMD}" = 'build' ]; then
     readonly LAMBDA_LAYER_SRC_DIR="${PROJECT_ROOT}/src/function/layer"
     readonly LAMBDA_LAYER_DEST_DIR="layer.out/${ENV}"
 
+    printf 'Lambda Layer Source: %s\n' "${LAMBDA_LAYER_SRC_DIR}"
+    printf 'Lambda Layer Target: %s\n\n' "${LAMBDA_LAYER_DEST_DIR}"
+
     commands=()
 
     while read -r dir; do
@@ -121,6 +124,10 @@ if [ "${CMD}" = 'build' ]; then
         > "${install_dir}/package-tmp.json"                                                       \
       && mv "${install_dir}/package-tmp.json" "${install_dir}/package.json"
 
+      # logging
+      printf '%s\n\n' "$(ls -lt "${install_dir}")"
+      printf '%s\n\n' "$(cat "${install_dir}/package.json")"
+
       # install 'dependencies' without 'devDependencies'
       commands+=("npm --prefix ${install_dir} install --production")
     }
@@ -128,7 +135,11 @@ if [ "${CMD}" = 'build' ]; then
 
     cmd=$(IFS=',' tmp="${commands[*]}" ; echo "${tmp//,/ && }")
 
+    printf 'Commands To Be Executed: %s\n\n' "${cmd}"
+
     $BASH_CMD -c "${cmd}"
+
+    printf '%s\n\n' "$(find ${LAMBDA_LAYER_DEST_DIR} -maxdepth 3)"
   }
 
   : 'TRANSPILE ALL .ts FILES' &&

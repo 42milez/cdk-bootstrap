@@ -18,7 +18,18 @@ install:
   # Install Node Packages
   - npm ci
 before_script:
+  # check bash
+  - type bash
+  - bash --version
+  # check npm
+  - type npm
+  - npm --version
+  # check npx
+  - type npx
+  - npx --version
+  # check code style
   - npm run lint
+  # build
   - npm run build
 script:
   - npm run test
