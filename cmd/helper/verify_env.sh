@@ -2,9 +2,13 @@
 
 verify_env()
 {
-  local DEVELOPMENT='development'
-  local STAGING='staging'
-  local PRODUCTION='production'
+  local DEVELOPMENT
+  local STAGING
+  local PRODUCTION
+
+  DEVELOPMENT=$(cat <'../config.yml' | yq r - 'env.development')
+  STAGING=$(cat <'../config.yml' | yq r - 'env.staging')
+  PRODUCTION=$(cat <'../config.yml' | yq r - 'env.production')
 
   case $1 in
     "${DEVELOPMENT}") : 'valid' ;;

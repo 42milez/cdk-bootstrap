@@ -1,12 +1,12 @@
 #!/bin/bash
+# shellcheck disable=SC1090
 
 set -eu
 
-. './lib/shellscript/read_yaml.sh'
-. './lib/shellscript/verify_env.sh'
-
 readonly PROJECT_ROOT=$(pwd)
-readonly CDK_OUT_DIR='cdk.out'
+
+. "${PROJECT_ROOT}/cmd/helper/read_yaml.sh"
+. "${PROJECT_ROOT}/cmd/helper/verify_env.sh"
 
 #  Parse command-line options
 # --------------------------------------------------
@@ -59,6 +59,7 @@ readonly CDK_CMD="docker-compose run
   -e AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
   --rm cdk"
 readonly CMD=$1
+readonly CDK_OUT_DIR='cdk.out'
 
 # BOOTSTRAP
 
@@ -73,7 +74,7 @@ fi
 
 if [ -z "${ENV+UNDEFINED}" ]; then
 {
-  readonly ENV='development'
+  readonly ENV=$(read_yaml "${PROJECT_ROOT}/cmd/config.yml" 'env.development')
 }
 fi
 

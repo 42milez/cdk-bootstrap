@@ -1,11 +1,12 @@
 #!/bin/bash
+# shellcheck disable=SC1090
 
 set -eu
 
-. './lib/shellscript/read_yaml.sh'
-. './lib/shellscript/verify_env.sh'
-
 readonly PROJECT_ROOT=$(pwd)
+
+. "${PROJECT_ROOT}/cmd/helper/read_yaml.sh"
+. "${PROJECT_ROOT}/cmd/helper/verify_env.sh"
 
 #  Parse command-line options
 # --------------------------------------------------
@@ -35,7 +36,7 @@ set -- "${positional[@]}"
 # --------------------------------------------------
 
 if [ -z "${ENV+UNDEFINED}" ]; then
-  readonly ENV='development'
+  readonly ENV=$(read_yaml "${PROJECT_ROOT}/cmd/config.yml" 'env.development')
 fi
 
 #  Command definitions
