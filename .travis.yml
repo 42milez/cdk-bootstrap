@@ -15,18 +15,29 @@ install:
   - sudo add-apt-repository -y ppa:duggan/bats
   - sudo apt-get update
   - sudo apt-get install -y bats
+  # Install yq
+  - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
+  - sudo add-apt-repository ppa:rmescandon/yq
+  - sudo apt update
+  - sudo apt install yq -y
   # Install Node Packages
   - npm ci
 before_script:
   # check bash
   - type bash
   - bash --version
+  # check jq
+  - type jq
+  - jq --version
   # check npm
   - type npm
   - npm --version
   # check npx
   - type npx
   - npx --version
+  # check yq
+  - type yq
+  - yq --version
   # check code style
   - ./cmd/code.sh lint
   # build
