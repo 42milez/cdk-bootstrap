@@ -136,7 +136,6 @@ if [ "${CMD}" = 'build' ]; then
         > "${install_dir}/package-tmp.json"                                                       \
       && mv "${install_dir}/package-tmp.json" "${install_dir}/package.json"
 
-      # logging
       printf '%s\n\n' "$(ls -lt "${install_dir}")"
       printf '%s\n\n' "$(cat "${install_dir}/package.json")"
 
