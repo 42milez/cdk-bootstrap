@@ -4,7 +4,7 @@ import { Effect, PolicyDocument, PolicyStatement, Role, ServicePrincipal } from 
 export function createRoles (scope: Construct, id: string): { [key: string]: Role } {
   return {
     lambdaRole: new Role(scope, 'LambdaRole', {
-      assumedBy: new ServicePrincipal('function.amazonaws.com', {
+      assumedBy: new ServicePrincipal('lambda.amazonaws.com', {
         // conditions: -
         // region: -
       }),
