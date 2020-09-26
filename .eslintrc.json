@@ -1,7 +1,8 @@
 {
   "env": {
     "es2020": true,
-    "node": true
+    "node": true,
+    "jest/globals": true
   },
   "extends": [
     "standard"
@@ -17,16 +18,15 @@
     "sourceType": "module"
   },
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "jest"
   ],
   "rules": {
     "no-extra-semi": "error",
+    "no-new": "off",
     "no-unexpected-multiline": "error",
     "no-unreachable": "error",
-    "semi": [
-      "error",
-      "always"
-    ],
+    "semi": ["error", "always"],
     "semi-spacing": [
       "error",
       {
@@ -34,9 +34,6 @@
         "before": false
       }
     ],
-    "semi-style": [
-      "error",
-      "last"
-    ]
+    "semi-style": ["error", "last"]
   }
 }

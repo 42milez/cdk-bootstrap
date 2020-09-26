@@ -56,16 +56,18 @@ if [ "${CMD}" = 'lint' ]; then
   {
     targets+=("$(echo "${path}" | perl -pe "s|${PROJECT_ROOT}|${DOCKER_WORK_DIR}|g")")
   }
-  done < <(find                                 \
-    "${PROJECT_ROOT}"                           \
-    -type f                                     \
-    -name '*.ts'                                \
-    -not -path "${PROJECT_ROOT}/cdk.out/*"      \
-    -not -path "${PROJECT_ROOT}/layer.out/*"    \
+  done < <(find                              \
+    "${PROJECT_ROOT}"                        \
+    -type f                                  \
+    -name '*.ts'                             \
+    -not -path "${PROJECT_ROOT}/cdk.out/*"   \
+    -not -path "${PROJECT_ROOT}/layer.out/*" \
     -not -path "${PROJECT_ROOT}/node_modules/*")
 
   # shellcheck disable=SC2086
-  $NPX_CMD eslint ${targets[*]}
+  $NPX_CMD eslint --fix ${targets[*]}
+
+  exit 0
 }
 fi
 
@@ -97,9 +99,9 @@ if [ "${CMD}" = 'build' ]; then
       # add 'dependencies' member if not exists
       if [ "$(jq '.dependencies?' "${install_dir}/package.json")" = 'null' ]; then
       {
-        cat < "${install_dir}/package.json"                                   \
-          | jq ". |= .+ {\"dependencies\": {}}"                               \
-          > "${install_dir}/package-tmp.json"                                 \
+        cat < "${install_dir}/package.json"     \
+          | jq ". |= .+ {\"dependencies\": {}}" \
+          > "${install_dir}/package-tmp.json"   \
         && mv "${install_dir}/package-tmp.json" "${install_dir}/package.json"
       }
       fi

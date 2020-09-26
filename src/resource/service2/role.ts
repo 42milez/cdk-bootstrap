@@ -1,7 +1,7 @@
-import {Construct, Stack} from '@aws-cdk/core';
-import {Effect, PolicyDocument, PolicyStatement, Role, ServicePrincipal} from '@aws-cdk/aws-iam';
+import { Construct, Stack } from '@aws-cdk/core';
+import { Effect, PolicyDocument, PolicyStatement, Role, ServicePrincipal } from '@aws-cdk/aws-iam';
 
-export function createRoles(scope: Construct, id: string): { [key: string]: Role } {
+export function createRoles (scope: Construct, id: string): { [key: string]: Role } {
   return {
     lambdaRole: new Role(scope, 'LambdaRole', {
       assumedBy: new ServicePrincipal('function.amazonaws.com', {

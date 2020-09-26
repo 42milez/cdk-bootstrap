@@ -3,4 +3,4 @@ const handler = async function (event: any, context: any) {
   console.log(JSON.stringify(context));
 };
 
-export {handler};
+export { handler };
