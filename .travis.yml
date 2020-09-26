@@ -28,8 +28,8 @@ before_script:
   - type npx
   - npx --version
   # check code style
-  - npm run lint
+  - ./cmd/code.sh lint
   # build
-  - npm run build
+  - ./cmd/code.sh build
 script:
-  - npm run test
+  - ./cmd/code.sh test
