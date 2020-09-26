@@ -17,6 +17,7 @@ readonly PROJECT_ROOT=$(pwd)
 positional=()
 
 while [ $# -gt 0 ]; do
+{
   opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "cdk.$1")
 
   if [ -z "${opt}" ]; then
@@ -29,6 +30,7 @@ while [ $# -gt 0 ]; do
 
   shift
   shift
+}
 done
 
 set -- "${positional[@]}" # restore positional parameters
@@ -39,13 +41,17 @@ set -- "${positional[@]}" # restore positional parameters
 readonly CONFIG_FILE="${PROJECT_ROOT}/cmd/config.yml"
 
 if [ -z "${AWS_PROFILE+UNDEFINED}" ]; then
+{
   readonly AWS_PROFILE=$(read_yaml "${CONFIG_FILE}" 'cli.profile')
   export AWS_PROFILE
+}
 fi
 
 if [ -z "${AWS_DEFAULT_REGION+UNDEFINED}" ]; then
+{
   readonly AWS_DEFAULT_REGION=$(read_yaml "${CONFIG_FILE}" 'cli.region')
   export AWS_DEFAULT_REGION
+}
 fi
 
 export AWS_PROFILE

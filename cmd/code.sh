@@ -36,7 +36,9 @@ set -- "${positional[@]}"
 # --------------------------------------------------
 
 if [ -z "${ENV+UNDEFINED}" ]; then
+{
   readonly ENV=$(read_yaml "${PROJECT_ROOT}/cmd/config.yml" 'env.development')
+}
 fi
 
 #  Command definitions
@@ -46,11 +48,15 @@ readonly DOCKER_WORK_DIR='/var/project'
 readonly CMD=$1
 
 if "${CI=false}"; then
+{
   readonly BASH_CMD='bash'
   readonly NPX_CMD='npx'
+}
 else
+{
   readonly BASH_CMD='docker-compose run --rm bash'
   readonly NPX_CMD='docker-compose run --rm npx'
+}
 fi
 
 # LINT
@@ -61,7 +67,11 @@ if [ "${CMD}" = 'lint' ]; then
 
   while read -r path; do
   {
-    targets+=("$(echo "${path}" | perl -pe "s|${PROJECT_ROOT}|${DOCKER_WORK_DIR}|g")")
+    if "${CI=false}"; then
+      targets+=("${path}")
+    else
+      targets+=("$(echo "${path}" | perl -pe "s|${PROJECT_ROOT}|${DOCKER_WORK_DIR}|g")")
+    fi
   }
   done < <(find                              \
     "${PROJECT_ROOT}"                        \
