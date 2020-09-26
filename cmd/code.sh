@@ -43,9 +43,15 @@ fi
 # --------------------------------------------------
 
 readonly DOCKER_WORK_DIR='/var/project'
-readonly BASH_CMD='docker-compose run --rm bash'
-readonly NPX_CMD='docker-compose run --rm npx'
 readonly CMD=$1
+
+if "${CI}"; then
+  readonly BASH_CMD='bash'
+  readonly NPX_CMD='npx'
+else
+  readonly BASH_CMD='docker-compose run --rm bash'
+  readonly NPX_CMD='docker-compose run --rm npx'
+fi
 
 # LINT
 
@@ -122,7 +128,6 @@ if [ "${CMD}" = 'build' ]; then
 
     cmd=$(IFS=',' tmp="${commands[*]}" ; echo "${tmp//,/ && }")
 
-    # install packages without development dependencies
     $BASH_CMD -c "${cmd}"
   }
 
