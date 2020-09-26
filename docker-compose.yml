@@ -9,6 +9,11 @@ services:
     image: 'base-cdk-bootstrap:latest'
     stdin_open: true
     tty: true
+  bash:
+    <<: *shared
+    entrypoint: 'bash'
+    volumes:
+      - '.:/var/project:delegated'
   cdk:
     <<: *shared
     entrypoint: 'npx cdk'

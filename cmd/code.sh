@@ -42,7 +42,7 @@ fi
 # --------------------------------------------------
 
 readonly DOCKER_WORK_DIR='/var/project'
-readonly NPM_CMD='docker-compose run --rm npm'
+readonly BASH_CMD='docker-compose run --rm bash'
 readonly NPX_CMD='docker-compose run --rm npx'
 readonly CMD=$1
 
@@ -81,39 +81,52 @@ verify_env "${ENV}"
 
 if [ "${CMD}" = 'build' ]; then
 {
-  readonly LAMBDA_LAYER_SRC_DIR="${PROJECT_ROOT}/src/function/layer"
-  readonly LAMBDA_LAYER_DEST_DIR="layer.out/${ENV}"
-
-  while read -r dir; do
+  : 'PREPARE LAMBDA LAYER' &&
   {
-    install_dir="${LAMBDA_LAYER_DEST_DIR}/${dir}/nodejs"
-    mkdir -p "${install_dir}"
-    cp "${LAMBDA_LAYER_SRC_DIR}/${dir}/package.json" "${install_dir}"
+    readonly LAMBDA_LAYER_SRC_DIR="${PROJECT_ROOT}/src/function/layer"
+    readonly LAMBDA_LAYER_DEST_DIR="layer.out/${ENV}"
 
-    # add 'dependencies' member if not exists
-    if [ "$(jq '.dependencies?' "${install_dir}/package.json")" = 'null' ]; then
+    commands=()
+
+    while read -r dir; do
     {
-      cat < "${install_dir}/package.json"                                   \
-        | jq ". |= .+ {\"dependencies\": {}}"                               \
-        > "${install_dir}/package-tmp.json"                                 \
+      install_dir="${LAMBDA_LAYER_DEST_DIR}/${dir}/nodejs"
+      mkdir -p "${install_dir}"
+      cp "${LAMBDA_LAYER_SRC_DIR}/${dir}/package.json" "${install_dir}"
+
+      # add 'dependencies' member if not exists
+      if [ "$(jq '.dependencies?' "${install_dir}/package.json")" = 'null' ]; then
+      {
+        cat < "${install_dir}/package.json"                                   \
+          | jq ". |= .+ {\"dependencies\": {}}"                               \
+          > "${install_dir}/package-tmp.json"                                 \
+        && mv "${install_dir}/package-tmp.json" "${install_dir}/package.json"
+      }
+      fi
+
+      layer_name=$(jq -r '.name' "${install_dir}/package.json")
+
+      # add self as a dependency
+      cat < "${install_dir}/package.json"                                                         \
+        | jq ".dependencies |= .+ {\"${layer_name}\": \"../../../../src/function/layer/${dir}\"}" \
+        > "${install_dir}/package-tmp.json"                                                       \
       && mv "${install_dir}/package-tmp.json" "${install_dir}/package.json"
+
+      # install 'dependencies' without 'devDependencies'
+      commands+=("npm --prefix ${install_dir} install --production")
     }
-    fi
+    done < <(find "${LAMBDA_LAYER_SRC_DIR}" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
 
-    layer_name=$(jq -r '.name' "${install_dir}/package.json")
-
-    # add self as a dependency
-    cat < "${install_dir}/package.json"                                                             \
-      | jq ".dependencies |= .+ {\"${layer_name}\": \"../../../../src/function/layer/${dir}\"}" \
-      > "${install_dir}/package-tmp.json"                                                           \
-    && mv "${install_dir}/package-tmp.json" "${install_dir}/package.json"
+    cmd=$(IFS=',' tmp="${commands[*]}" ; echo "${tmp//,/ && }")
 
     # install packages without development dependencies
-    $NPM_CMD --prefix "${install_dir}" install --production
+    $BASH_CMD -c "${cmd}"
   }
-  done < <(find "${LAMBDA_LAYER_SRC_DIR}" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
 
-  $NPX_CMD tsc
+  : 'TRANSPILE ALL .ts FILES' &&
+  {
+    $NPX_CMD tsc
+  }
 }
 elif [ "${CMD}" = 'test' ]; then
 {
