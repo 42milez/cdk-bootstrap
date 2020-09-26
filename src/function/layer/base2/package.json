@@ -2,6 +2,5 @@
   "name": "base-layer-2-cdk-bootstrap",
   "version": "1.0.0",
   "main": "index.js",
-  "private": true,
-  "dependencies": {}
+  "private": true
 }

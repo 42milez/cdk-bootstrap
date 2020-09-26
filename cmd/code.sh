@@ -82,7 +82,7 @@ verify_env "${ENV}"
 if [ "${CMD}" = 'build' ]; then
 {
   readonly LAMBDA_LAYER_SRC_DIR="${PROJECT_ROOT}/src/function/layer"
-  readonly LAMBDA_LAYER_DEST_DIR="${DOCKER_WORK_DIR}/layer.out/${ENV}"
+  readonly LAMBDA_LAYER_DEST_DIR="layer.out/${ENV}"
 
   while read -r dir; do
   {
@@ -100,16 +100,18 @@ if [ "${CMD}" = 'build' ]; then
     }
     fi
 
+    layer_name=$(jq -r '.name' "${install_dir}/package.json")
+
     # add self as a dependency
-    cat < "${install_dir}/package.json"                                                    \
-      | jq ".dependencies |= .+ {\"self\": \"${PROJECT_ROOT}/src/function/layer/${dir}\"}" \
-      > "${install_dir}/package-tmp.json"                                                  \
+    cat < "${install_dir}/package.json"                                                             \
+      | jq ".dependencies |= .+ {\"${layer_name}\": \"../../../../src/function/layer/${dir}\"}" \
+      > "${install_dir}/package-tmp.json"                                                           \
     && mv "${install_dir}/package-tmp.json" "${install_dir}/package.json"
+
+    # install packages without development dependencies
+    $NPM_CMD --prefix "${install_dir}" install --production
   }
   done < <(find "${LAMBDA_LAYER_SRC_DIR}" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
-
-  # install packages without development dependencies
-  $NPM_CMD --prefix "${DOCKER_WORK_DIR}/${LAMBDA_LAYER_DIR}" install --production
 
   $NPX_CMD tsc
 }
