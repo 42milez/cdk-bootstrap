@@ -26,28 +26,20 @@
 ./cmd/cdk.sh list --env development
 ```
 
-##### available options:
-
-- `--env`: development | staging | production
-
 ### Deploying the stacks
 
 ```
 ./cmd/cdk.sh deploy --env development --stack 'service1,service2'
 ```
 
-##### available options:
+### Printing the CloudFormation template
 
-- `--env`: development | staging | production
-- `--stack`
+```
+./cmd/cdk.sh deploy --env development --stack 'service1,service2'
+```
 
 ### Destroying the stacks
 
 ```
 ./cmd/cdk.sh destroy --env development --stack 'service1,service2'
 ```
-
-##### available options:
-
-- `--env`: development | staging | production
-- `--stack`

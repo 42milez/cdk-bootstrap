@@ -60,18 +60,19 @@ export AWS_DEFAULT_REGION
 #  Command definitions
 # --------------------------------------------------
 
+readonly CMD=$1
 readonly CDK_CMD="docker-compose run
   -e AWS_PROFILE=${AWS_PROFILE}
   -e AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
   --rm cdk"
-readonly CMD=$1
-readonly CDK_OUT_DIR='cdk.out'
+readonly DOCKER_WORK_DIR='/var/project'
+readonly CDK_OUT_DIR="${DOCKER_WORK_DIR}/cdk.out"
 
 # BOOTSTRAP
 
 if [ "${CMD}" = 'bootstrap' ]; then
 {
-  $CDK_CMD bootstrap -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/bootstrap"
+  $CDK_CMD bootstrap -o "${CDK_OUT_DIR}/bootstrap"
   exit 0
 }
 fi
@@ -88,7 +89,7 @@ verify_env "${ENV}"
 
 if [ "${CMD}" = 'list' ]; then
 {
-  $CDK_CMD list -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}"
+  $CDK_CMD list -o "${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}"
   exit 0
 }
 fi
@@ -109,29 +110,29 @@ while read -r s; do
 }
 done < <(echo "$(IFS=',' tmp=($(echo "${STACK}")) ; printf '%s\n' "${tmp[@]}")")
 
+synth()
+{
+  local stacks_=$1
+
+  # shellcheck disable=SC2086
+  $CDK_CMD synth -o "${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" ${stacks_}
+}
+
 if [ "${CMD}" = 'deploy' ]; then
 {
   # shellcheck disable=SC2086
-  $CDK_CMD deploy                              \
-    -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" \
-    -c "env=${ENV}"                            \
-    ${stacks[*]}
+  $CDK_CMD deploy -o "${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" ${stacks[*]}
+
+  synth "${stacks[*]}"
 }
 elif [ "${CMD}" = 'destroy' ]; then
 {
   # shellcheck disable=SC2086
-  $CDK_CMD destroy                             \
-    -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" \
-    -c "env=${ENV}"                            \
-    ${stacks[*]}
+  $CDK_CMD destroy -o "${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" ${stacks[*]}
 }
 elif [ "${CMD}" = 'synth' ]; then
 {
-  # shellcheck disable=SC2086
-  $CDK_CMD cdk synth                           \
-    -o "${PROJECT_ROOT}/${CDK_OUT_DIR}/${ENV}" \
-    -c "env=${ENV}"                            \
-    ${stacks[*]}
+  synth "${stacks[*]}"
 }
 else
 {

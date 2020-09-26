@@ -2,20 +2,20 @@
 
 verify_env()
 {
-  local CURRENT_DIR="$(pwd)"
+  local current_dir
+  local development
+  local staging
+  local production
 
-  local DEVELOPMENT
-  local STAGING
-  local PRODUCTION
-
-  DEVELOPMENT=$(cat <"${CURRENT_DIR}/cmd/config.yml" | yq r - 'env.development')
-  STAGING=$(cat <"${CURRENT_DIR}/cmd/config.yml" | yq r - 'env.staging')
-  PRODUCTION=$(cat <"${CURRENT_DIR}/cmd/config.yml" | yq r - 'env.production')
+  current_dir="$(pwd)"
+  development=$(cat <"${current_dir}/cmd/config.yml" | yq r - 'env.development')
+  staging=$(cat <"${current_dir}/cmd/config.yml" | yq r - 'env.staging')
+  production=$(cat <"${current_dir}/cmd/config.yml" | yq r - 'env.production')
 
   case $1 in
-    "${DEVELOPMENT}") : 'valid' ;;
-    "${STAGING}") : 'valid' ;;
-    "${PRODUCTION}") : 'valid' ;;
-    *) echo "invalid environment: ${DEVELOPMENT}, ${STAGING} or ${PRODUCTION} is available" && exit 1 ;;
+    "${development}") : 'valid' ;;
+    "${staging}")     : 'valid' ;;
+    "${production}")  : 'valid' ;;
+    *) echo "invalid environment: ${development}, ${staging} or ${production} is available" && exit 1 ;;
   esac
 }
