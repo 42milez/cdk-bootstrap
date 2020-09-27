@@ -1,7 +1,7 @@
 # cdk-experiment
 [![Build Status](https://travis-ci.org/42milez/cdk-experiment.svg?branch=master)](https://travis-ci.org/42milez/cdk-experiment)
 
-cdk-experiment is an experimental project template based on AWS CDK. This project aims easy deployment of AWS resources that is generally used for web application.
+cdk-experiment is an experimental project template based on AWS CDK. This project aims to achieve easy deployment of AWS resources that is generally used for web application.
 
 ## Features
 - Multi CFn stack support
