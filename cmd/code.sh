@@ -131,9 +131,9 @@ if [ "${CMD}" = 'build' ]; then
       layer_name=$(jq -r '.name' "${install_dir}/package.json")
 
       # add self as a dependency
-      cat < "${install_dir}/package.json"                                                         \
+      cat < "${install_dir}/package.json"                                                                \
         | jq ".dependencies |= .+ {\"${layer_name}-${ENV}\": \"../../../../src/function/layer/${dir}\"}" \
-        > "${install_dir}/package-tmp.json"                                                       \
+        > "${install_dir}/package-tmp.json"                                                              \
       && mv "${install_dir}/package-tmp.json" "${install_dir}/package.json"
 
       printf '%s\n' "$(cat "${install_dir}/package.json")"
