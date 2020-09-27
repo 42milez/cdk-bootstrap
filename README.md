@@ -47,10 +47,11 @@ docker-compose run --rm npm install
 
 #### Printing manifest
 ```
-./cmd/cdk.sh list --env development
+./cmd/cdk.sh list --env development --stack 'service2'
 ```
 ###### Available options:
 - `--env`: Environment
+- `--stack`: Stack Name (REQUIRED)
 
 #### Deploying the stacks
 ```
