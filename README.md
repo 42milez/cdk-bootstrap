@@ -16,7 +16,7 @@ cdk-experiment is an experimental project template based on AWS CDK. This projec
 - [yq](https://github.com/mikefarah/yq)
 
 ## Quick Start
-⚠️ [Named profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) is required when creating CFn stack. Named profile can be specified as `cli.profile` key in `cmd/config.yml`.
+⚠️ [Named profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) is required when calling CFn's API. Named profile can be specified as `cli.profile` key in `cmd/config.yml`.
 
 ```
 docker-compose build
