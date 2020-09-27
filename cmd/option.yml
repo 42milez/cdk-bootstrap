@@ -1,0 +1,8 @@
+cdk:
+  --app: 'APP'                   # Name of CDK application’s stack
+  --env: 'ENV'                   # Environment
+  --profile: 'AWS_PROFILE'       # Used by AWS CLI
+  --region: 'AWS_DEFAULT_REGION' # AWS Region
+  --stack: 'STACK'               # Stack Name
+code:
+  --env: 'ENV'

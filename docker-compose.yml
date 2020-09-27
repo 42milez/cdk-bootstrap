@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  base:
+    build:
+      context: '.'
+      dockerfile: './docker/Dockerfile'
+    image: 'base-cdk-experiment:latest'
+  shared: &shared
+    image: 'base-cdk-experiment:latest'
+    stdin_open: true
+    tty: true
+  bash:
+    <<: *shared
+    entrypoint: 'bash'
+    volumes:
+      - '.:/var/project:delegated'
+  cdk:
+    <<: *shared
+    entrypoint: 'npx cdk'
+    volumes:
+      - '~/.aws:/root/.aws'
+      - '.:/var/project'
+  npm:
+    <<: *shared
+    entrypoint: 'npm'
+    volumes:
+      - '.:/var/project:delegated'
+  npx:
+    <<: *shared
+    entrypoint: 'npx'
+    volumes:
+      - '.:/var/project:delegated'
+
+# References:
+# - Performance tuning for volume mounts (shared filesystems)
+#   https://docs.docker.com/docker-for-mac/osxfs-caching

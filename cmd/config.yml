@@ -1,0 +1,8 @@
+cli:
+  profile: '42milez'       # default profile
+  region: 'ap-northeast-1' # default region
+env:
+  development: &dev 'development'
+  staging: 'staging'
+  production: 'production'
+  default: *dev

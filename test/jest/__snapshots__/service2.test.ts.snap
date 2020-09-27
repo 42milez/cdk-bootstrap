@@ -1,0 +1,313 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Service2 Snapshot Test 1`] = `
+Object {
+  "Parameters": Object {
+    "AssetParametersb6b4159901c4c58ae071d371127d68a28c9e264a3583c7b77013c805a8917605ArtifactHash685C7EC3": Object {
+      "Description": "Artifact hash for asset \\"b6b4159901c4c58ae071d371127d68a28c9e264a3583c7b77013c805a8917605\\"",
+      "Type": "String",
+    },
+    "AssetParametersb6b4159901c4c58ae071d371127d68a28c9e264a3583c7b77013c805a8917605S3Bucket3C7ED0F5": Object {
+      "Description": "S3 bucket for asset \\"b6b4159901c4c58ae071d371127d68a28c9e264a3583c7b77013c805a8917605\\"",
+      "Type": "String",
+    },
+    "AssetParametersb6b4159901c4c58ae071d371127d68a28c9e264a3583c7b77013c805a8917605S3VersionKey6BBDD3B1": Object {
+      "Description": "S3 key for asset version \\"b6b4159901c4c58ae071d371127d68a28c9e264a3583c7b77013c805a8917605\\"",
+      "Type": "String",
+    },
+    "AssetParameterse392921aca9408c62afcbbebef20da8635c2c1fbc99fe88aeb87d991a66a17a3ArtifactHashC7C87D0B": Object {
+      "Description": "Artifact hash for asset \\"e392921aca9408c62afcbbebef20da8635c2c1fbc99fe88aeb87d991a66a17a3\\"",
+      "Type": "String",
+    },
+    "AssetParameterse392921aca9408c62afcbbebef20da8635c2c1fbc99fe88aeb87d991a66a17a3S3Bucket40EA36AE": Object {
+      "Description": "S3 bucket for asset \\"e392921aca9408c62afcbbebef20da8635c2c1fbc99fe88aeb87d991a66a17a3\\"",
+      "Type": "String",
+    },
+    "AssetParameterse392921aca9408c62afcbbebef20da8635c2c1fbc99fe88aeb87d991a66a17a3S3VersionKey31154B55": Object {
+      "Description": "S3 key for asset version \\"e392921aca9408c62afcbbebef20da8635c2c1fbc99fe88aeb87d991a66a17a3\\"",
+      "Type": "String",
+    },
+    "AssetParametersf9caa1f9683d6033e1b15d578f01eec056ec166e9aec850c67456e9691e48feeArtifactHash3DD08049": Object {
+      "Description": "Artifact hash for asset \\"f9caa1f9683d6033e1b15d578f01eec056ec166e9aec850c67456e9691e48fee\\"",
+      "Type": "String",
+    },
+    "AssetParametersf9caa1f9683d6033e1b15d578f01eec056ec166e9aec850c67456e9691e48feeS3BucketF41B5A6A": Object {
+      "Description": "S3 bucket for asset \\"f9caa1f9683d6033e1b15d578f01eec056ec166e9aec850c67456e9691e48fee\\"",
+      "Type": "String",
+    },
+    "AssetParametersf9caa1f9683d6033e1b15d578f01eec056ec166e9aec850c67456e9691e48feeS3VersionKeyDAC85604": Object {
+      "Description": "S3 key for asset version \\"f9caa1f9683d6033e1b15d578f01eec056ec166e9aec850c67456e9691e48fee\\"",
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "BaseLayer1D573D760": Object {
+      "Properties": Object {
+        "CompatibleRuntimes": Array [
+          "nodejs12.x",
+        ],
+        "Content": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParametersb6b4159901c4c58ae071d371127d68a28c9e264a3583c7b77013c805a8917605S3Bucket3C7ED0F5",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParametersb6b4159901c4c58ae071d371127d68a28c9e264a3583c7b77013c805a8917605S3VersionKey6BBDD3B1",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParametersb6b4159901c4c58ae071d371127d68a28c9e264a3583c7b77013c805a8917605S3VersionKey6BBDD3B1",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Description": "Base Layer 1",
+        "LayerName": "base-layer-1-cdk-experiment-development",
+      },
+      "Type": "AWS::Lambda::LayerVersion",
+    },
+    "BaseLayer2EEC4AED0": Object {
+      "Properties": Object {
+        "CompatibleRuntimes": Array [
+          "nodejs12.x",
+        ],
+        "Content": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameterse392921aca9408c62afcbbebef20da8635c2c1fbc99fe88aeb87d991a66a17a3S3Bucket40EA36AE",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameterse392921aca9408c62afcbbebef20da8635c2c1fbc99fe88aeb87d991a66a17a3S3VersionKey31154B55",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameterse392921aca9408c62afcbbebef20da8635c2c1fbc99fe88aeb87d991a66a17a3S3VersionKey31154B55",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Description": "Base Layer 2",
+        "LayerName": "base-layer-2-cdk-experiment-development",
+      },
+      "Type": "AWS::Lambda::LayerVersion",
+    },
+    "HelloCdkFunction90393412": Object {
+      "DependsOn": Array [
+        "LambdaRoleDefaultPolicy75625A82",
+        "LambdaRole3A44B857",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParametersf9caa1f9683d6033e1b15d578f01eec056ec166e9aec850c67456e9691e48feeS3BucketF41B5A6A",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParametersf9caa1f9683d6033e1b15d578f01eec056ec166e9aec850c67456e9691e48feeS3VersionKeyDAC85604",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParametersf9caa1f9683d6033e1b15d578f01eec056ec166e9aec850c67456e9691e48feeS3VersionKeyDAC85604",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Description": "Hello CDK",
+        "Environment": Object {
+          "Variables": Object {
+            "NODE_ENV": "development",
+          },
+        },
+        "FunctionName": "hello-service2-development",
+        "Handler": "index.handler",
+        "Layers": Array [
+          Object {
+            "Ref": "BaseLayer1D573D760",
+          },
+          Object {
+            "Ref": "BaseLayer2EEC4AED0",
+          },
+        ],
+        "MemorySize": 128,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "LambdaRole3A44B857",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 15,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "HelloCdkFunctionLogGroup42EB1465": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/function/",
+              Object {
+                "Ref": "HelloCdkFunction90393412",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "LambdaRole3A44B857": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Description": "Hello CDK",
+        "Policies": Array [
+          Object {
+            "PolicyDocument": Object {
+              "Statement": Array [
+                Object {
+                  "Action": Array [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:aws:logs:",
+                        Object {
+                          "Ref": "AWS::Region",
+                        },
+                        ":",
+                        Object {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":*",
+                      ],
+                    ],
+                  },
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "logs",
+          },
+        ],
+        "RoleName": "lambda-service2-development",
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "LambdaRoleDefaultPolicy75625A82": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "LambdaRoleDefaultPolicy75625A82",
+        "Roles": Array [
+          Object {
+            "Ref": "LambdaRole3A44B857",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+  },
+}
+`;
