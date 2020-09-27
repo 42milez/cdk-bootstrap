@@ -6,10 +6,11 @@ set -eu
 readonly PROJECT_ROOT=$(pwd)
 
 . "${PROJECT_ROOT}/cmd/helper/read_yaml.sh"
-. "${PROJECT_ROOT}/cmd/helper/validate_option.sh"
 . "${PROJECT_ROOT}/cmd/helper/validate_env.sh"
+. "${PROJECT_ROOT}/cmd/helper/validate_option.sh"
 
-#  Parse command-line options
+# --------------------------------------------------
+#  Parse Command-Line Options
 # --------------------------------------------------
 
 positional=()
@@ -35,34 +36,34 @@ done
 
 set -- "${positional[@]}"
 
-#  Set defaults
+# --------------------------------------------------
+#  Setup
 # --------------------------------------------------
 
 if [ -z "${ENV+UNDEFINED}" ]; then
-{
   readonly ENV=$(read_yaml "${PROJECT_ROOT}/cmd/config.yml" 'env.development')
-}
 fi
 
-#  Command definitions
+if [ -z "${ENV+UNDEFINED}" ]; then
+  readonly ENV='development'
+fi
+
+validate_env "${ENV}"
+
+# --------------------------------------------------
+#  Command Definitions
 # --------------------------------------------------
 
 readonly DOCKER_WORK_DIR='/var/project'
 readonly CMD=$1
 
 if "${CI=false}"; then
-{
   readonly BASH_CMD='bash'
   readonly NPX_CMD='npx'
-}
 else
-{
   readonly BASH_CMD='docker-compose run --rm bash'
   readonly NPX_CMD='docker-compose run --rm npx'
-}
 fi
-
-# LINT
 
 if [ "${CMD}" = 'lint' ]; then
 {
@@ -86,22 +87,8 @@ if [ "${CMD}" = 'lint' ]; then
 
   # shellcheck disable=SC2086
   $NPX_CMD eslint --fix ${targets[*]}
-
-  exit 0
 }
-fi
-
-# BUILD / TEST / SNAPSHOT
-
-if [ -z "${ENV+UNDEFINED}" ]; then
-{
-  readonly ENV='development'
-}
-fi
-
-validate_env "${ENV}"
-
-if [ "${CMD}" = 'build' ]; then
+elif [ "${CMD}" = 'build' ]; then
 {
   validate_option 'code' 'build'
 
@@ -173,7 +160,5 @@ elif [ "${CMD}" = 'snapshot' ]; then
   $NPX_CMD jest --updateSnapshot
 }
 else
-{
   echo "invalid command: ${CMD} is not defined"
-}
 fi
