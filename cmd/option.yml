@@ -1,51 +1,108 @@
 cdk:
-  bootstrap:                       # no option
+  --help: |
+    Available Commands:
+      bootstrap
+      deploy
+      list
+      synth
+      destroy
+  bootstrap: # <no option>
   deploy:
-    --stack: 'STACK'               # stack name
+    --help: |
+      Available Options:
+        --stack    REQUIRED: stack name
+        --env      environment identifier
+        --profile  named profile for AWS CLI
+        --region   AWS region
+    --stack:
+      name: 'STACK'
       required: true
-    --env: 'ENV'                   # environment identifier
+    --env:
+      name: 'ENV'
       required: false
-    --profile: 'AWS_PROFILE'       # named profile for AWS CLI
+    --profile:
+      name: 'AWS_PROFILE'
       required: false
-    --region: 'AWS_DEFAULT_REGION' # AWS region
+    --region:
+      name: 'AWS_DEFAULT_REGION'
       required: false
   list:
-    --env: 'ENV'
+    --help: |
+      Available Options:
+        --env      environment identifier
+        --profile  named profile for AWS CLI
+        --region   AWS region
+    --env:
+      name: 'ENV'
       required: false
-    --profile: 'AWS_PROFILE'
+    --profile:
+      name: 'AWS_PROFILE'
       required: false
-    --region: 'AWS_DEFAULT_REGION'
+    --region:
+      name: 'AWS_DEFAULT_REGION'
       required: false
   synth:
-    --stack: 'STACK'
+    --help: |
+      Available Options:
+        --stack    REQUIRED: stack name
+        --env      environment identifier
+        --profile  named profile for AWS CLI
+        --region   AWS region
+    --stack:
+      name: 'STACK'
       required: true
-    --env: 'ENV'
+    --env:
+      name: 'ENV'
       required: false
-    --profile: 'AWS_PROFILE'
+    --profile:
+      name: 'AWS_PROFILE'
       required: false
-    --region: 'AWS_DEFAULT_REGION'
+    --region:
+      name: 'AWS_DEFAULT_REGION'
       required: false
   destroy:
-    --stack: 'STACK'
+    --help: |
+      Available Options:
+        --stack    REQUIRED: stack name
+        --env      environment identifier
+        --profile  named profile for AWS CLI
+        --region   AWS region
+    --stack:
+      name: 'STACK'
       required: true
-    --env: 'ENV'
+    --env:
+      name: 'ENV'
       required: false
-    --profile: 'AWS_PROFILE'
+    --profile:
+      name: 'AWS_PROFILE'
       required: false
-    --region: 'AWS_DEFAULT_REGION'
+    --region:
+      name: 'AWS_DEFAULT_REGION'
       required: false
 code:
-  lint:                   # no option
-  test:                   # no option
-  snapshot:               # no option
+  lint: # <no option>
+  test: # <no option>
+  snapshot: # <no option>
   build:
-    --env: 'ENV'
+    --help: |
+      Available Options:
+        --env  environment identifier
+    --env:
+      name: 'ENV'
       required: false
 sam:
   invoke:
-    --fid: 'FID'          # function identifier
+    --help: |
+      Available Options:
+        --fid    REQUIRED: function identifier
+        --stack  REQUIRED: stack name
+        --event  event data
+    --fid:
+      name: 'FID'
       required: true
-    --stack: 'STACK'
+    --stack:
+      name: 'STACK'
       required: true
-    --event: 'EVENT_DATA' # event data
+    --event:
+      name: 'EVENT_DATA'
       required: false
