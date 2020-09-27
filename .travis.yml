@@ -11,10 +11,17 @@ git:
   depth: 1
   submodules: false
 install:
-  # Install bats ( https://github.com/mikefarah/yq#on-ubuntu-1604-or-higher-from-debian-package )
-  - sudo add-apt-repository -y ppa:duggan/bats
-  - sudo apt-get update
-  - sudo apt-get install -y bats
+  # Install bats ( https://github.com/bats-core/bats-core/wiki/Install#travis-ci---adding-bats-dependency )
+  - |
+    if [ "$TRAVIS_OS_NAME" = "linux" ]; then
+      branch=master
+      batstmp="$(mktemp -d bats-core-"${branch}".XXXXX)"
+      pushd "${batstmp}" &> /dev/null || return 11
+      curl -sSLO https://github.com/bats-core/bats-core/archive/"${branch}".zip
+      unzip -qo "${branch}".zip
+      sudo bash "${batstmp}"/bats-core-"${branch}"/install.sh /usr/local
+      popd &> /dev/null || return 12
+    fi
   # Install yq ( https://github.com/mikefarah/yq#on-ubuntu-1604-or-higher-from-debian-package )
   - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
   - sudo add-apt-repository -y ppa:rmescandon/yq
@@ -44,6 +51,7 @@ before_script:
   - ./cmd/code.sh build
 script:
   - ./cmd/code.sh test
+  - bats ./test/bash
 notifications:
   slack:
     secure: CdXqJtgK31M83FDnHjnFPiWKtBnUv1dxSCV72q8lzq3NeZAxtyITxXOjDasJ4g7efuIJ6nM2AztZTW58rhsSdGP6ntaX7sKgC0R5dOc4OzMHqqEVvzX/S7k27m2BTbB6KQf2oEWNHaHPosNmo8MU+UdvreYpUrYeCp7HHec9VNaei2lDz/BfkrMeBBJ/uud5ujiEuPsQinM3/nkGW8uQAbyj2EcUXu732Lt5b6ZYfEy2Yhz0MPOAaLEKVT20AWIoMwIPFBPQQwqHbD7KAbOZKBPsvwaULR1GjeguTqcx/X8NmkDEj0XqA3NkvRzQRJdW3fccHyvlcpKlzPhNi//EFPd6M6snhrqmH9RURhTu9V3pTDda241YfLo3M/GTNhFqKCDwxbV0OuY3YOvyIEYUZPNJrQjGtH3VkOArIwhV9JvW28ZczU0loyEwMq/dJEvDLZzTZxNngqGo840uvNw30SaviBjrD1RNyjQT5sZAzGNDsbBBFgwWEgtC/PChCcf4DUKLF9F0NYgsnyp0Nb1Pk3dZPxR7EIcxPKmrPeqUB6iPbZHeb/zxzMhMmNZ0HGd/BXJ2abBcpZN9GQp589JuD6VOxOHqLgId1G/LVPrhaH0kMI2GIKDAVBc9NNZESm1vFDPq3BetMDoNi6vL3S1vSV5jPsQ3px68hyCbswxiTNw=
