@@ -13,11 +13,11 @@ readonly PROJECT_ROOT=$(pwd)
 #  Parse Command-Line Options
 # --------------------------------------------------
 
-positional=()
+positional=("$1") && shift
 
 while [ $# -gt 0 ]; do
 {
-  opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "code.$1.val")
+  opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "code.${positional[0]}.$1.val")
 
   if [ -z "${opt}" ]; then
     positional+=("$1")

@@ -16,11 +16,11 @@ readonly PROJECT_ROOT=$(pwd)
 #  - How do I parse command line arguments in Bash?
 #    https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 
-positional=()
+positional=("$1") && shift # store sub-command
 
 while [ $# -gt 0 ]; do
 {
-  opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "cdk.$1.val")
+  opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "cdk.${positional[0]}.$1.val")
 
   # skip positional argument
   if [ -z "${opt}" ]; then
