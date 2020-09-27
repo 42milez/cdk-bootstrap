@@ -1,14 +1,14 @@
 {
-  "name": "cdk-bootstrap",
+  "name": "cdk-experiment",
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "git@github.com:42milez/cdk-bootstrap.git"
+    "url": "git@github.com:42milez/cdk-experiment.git"
   },
   "description": "Bootstrap for AWS CDK project.",
   "license": "MIT",
   "bin": {
-    "cdk-bootstrap": "bin/cdk-bootstrap.js"
+    "cdk-experiment": "bin/cdk-experiment.js"
   },
   "scripts": {
     "build": "tsc",
@@ -28,8 +28,8 @@
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
     "aws-cdk": "^1.64.0",
-    "base-layer-1-cdk-bootstrap-development": "file:./src/function/layer/base1",
-    "base-layer-2-cdk-bootstrap-development": "file:./src/function/layer/base2",
+    "base-layer-1-cdk-experiment-development": "file:./src/function/layer/base1",
+    "base-layer-2-cdk-experiment-development": "file:./src/function/layer/base2",
     "eslint": "^7.9.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",

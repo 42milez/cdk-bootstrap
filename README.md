@@ -1,6 +1,6 @@
-## cdk-bootstrap
+## cdk-experiment
 
-[![Build Status](https://travis-ci.org/42milez/cdk-bootstrap.svg?branch=master)](https://travis-ci.org/42milez/cdk-bootstrap)
+[![Build Status](https://travis-ci.org/42milez/cdk-experiment.svg?branch=master)](https://travis-ci.org/42milez/cdk-experiment)
 
 ## Features
 

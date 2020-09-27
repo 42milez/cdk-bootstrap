@@ -4,9 +4,9 @@ services:
     build:
       context: '.'
       dockerfile: './docker/Dockerfile'
-    image: 'base-cdk-bootstrap:latest'
+    image: 'base-cdk-experiment:latest'
   shared: &shared
-    image: 'base-cdk-bootstrap:latest'
+    image: 'base-cdk-experiment:latest'
     stdin_open: true
     tty: true
   bash:

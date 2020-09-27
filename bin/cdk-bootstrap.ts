@@ -4,7 +4,7 @@ import * as cdk from '@aws-cdk/core';
 import { Service1Stack } from '../src/stack/service1';
 import { Service2Stack } from '../src/stack/service2';
 
-const APP_NAME = 'cdk-bootstrap';
+const APP_NAME = 'cdk-experiment';
 
 const app = new cdk.App();
 const env = app.node.tryGetContext('env');

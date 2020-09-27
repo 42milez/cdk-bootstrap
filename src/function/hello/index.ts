@@ -13,8 +13,8 @@ const handler = async function (event: any, context: any) {
     }
   });
 
-  const HELLO_1 = await import(`base-layer-1-cdk-bootstrap-${process.env.NODE_ENV}`);
-  const HELLO_2 = await import(`base-layer-2-cdk-bootstrap-${process.env.NODE_ENV}`);
+  const HELLO_1 = await import(`base-layer-1-cdk-experiment-${process.env.NODE_ENV}`);
+  const HELLO_2 = await import(`base-layer-2-cdk-experiment-${process.env.NODE_ENV}`);
 
   console.log(JSON.stringify(event));
   console.log(JSON.stringify(context));

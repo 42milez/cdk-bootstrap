@@ -5,7 +5,7 @@ import * as CdkBootstrap from '../../src/stack/service1';
 test('Empty Stack', () => {
   const app = new cdk.App();
   // WHEN
-  const stack = new CdkBootstrap.Service1Stack(app, 'Service1Stack', 'development', 'cdk-bootstrap');
+  const stack = new CdkBootstrap.Service1Stack(app, 'Service1Stack', 'development', 'cdk-experiment');
   // THEN
   expectCDK(stack).to(matchTemplate({
     Resources: {},
