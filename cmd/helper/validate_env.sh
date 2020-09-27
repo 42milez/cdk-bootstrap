@@ -8,7 +8,6 @@ validate_env()
   local development
   local staging
   local production
-
   current_dir="$(pwd)"
   development=$(cat <"${current_dir}/cmd/config.yml" | yq r - 'env.development')
   staging=$(cat <"${current_dir}/cmd/config.yml" | yq r - 'env.staging')

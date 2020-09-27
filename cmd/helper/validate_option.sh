@@ -4,11 +4,9 @@ set -eu
 
 validate_option()
 {
-  local cmd
-  local sub_cmd
+  local cmd=$1
+  local sub_cmd=$2
   local current_dir
-  cmd=$1
-  sub_cmd=$2
   current_dir="$(pwd)"
 
   while read -r key; do
@@ -22,6 +20,6 @@ validate_option()
     fi
   }
   done < <(cat <"${current_dir}/cmd/option.yml" \
-    | yq r - -j "${cmd}"                       \
+    | yq r - -j "${cmd}"                        \
     | jq -r ".${sub_cmd} | with_entries(select((.value|.required) == true)) | keys[]")
 }
