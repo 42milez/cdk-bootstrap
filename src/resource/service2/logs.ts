@@ -8,7 +8,7 @@ export function createLogs (scope: Construct, functions: { [key: string]: Functi
   return {
     helloCdkFunctionLogGroup: new LogGroup(scope, 'HelloCdkFunctionLogGroup', {
       logGroupName: '/aws/function/' + functions.hello.functionName,
-      retention: getRetentionDays()
-    })
+      retention: getRetentionDays(),
+    }),
   };
 }

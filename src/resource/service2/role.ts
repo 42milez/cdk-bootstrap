@@ -17,29 +17,29 @@ export function createRoles (scope: Construct, id: string): { [key: string]: Rol
               actions: [
                 'logs:CreateLogGroup',
                 'logs:CreateLogStream',
-                'logs:PutLogEvents'
+                'logs:PutLogEvents',
               ],
               effect: Effect.ALLOW,
               resources: [
-                `arn:aws:logs:${Stack.of(scope).region}:${Stack.of(scope).account}:*`
-              ]
+                `arn:aws:logs:${Stack.of(scope).region}:${Stack.of(scope).account}:*`,
+              ],
               // conditions: -
               // notActions: -
               // notResources: -
               // notPrincipals: -
               // principals: -
               // sid: -
-            })
-          ]
-        })
+            }),
+          ],
+        }),
       },
-      roleName: `lambda-${id}`
+      roleName: `lambda-${id}`,
       // externalId: -
       // externalIds: -
       // managedPolicies: -
       // maxSessionDuration: -
       // path: -
       // permissionsBoundary: -
-    })
+    }),
   };
 }

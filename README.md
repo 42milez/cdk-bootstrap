@@ -2,6 +2,13 @@
 
 [![Build Status](https://travis-ci.org/42milez/cdk-bootstrap.svg?branch=master)](https://travis-ci.org/42milez/cdk-bootstrap)
 
+## Features
+
+- Multi stack support
+- Multi stage support (dev/stg/prod)
+- Multi Lambda layer support
+- etc.
+
 ### Checking Code Style
 
 ```

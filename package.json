@@ -28,6 +28,8 @@
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
     "aws-cdk": "^1.64.0",
+    "base-layer-1-cdk-bootstrap-development": "file:./src/function/layer/base1",
+    "base-layer-2-cdk-bootstrap-development": "file:./src/function/layer/base2",
     "eslint": "^7.9.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",

@@ -108,7 +108,7 @@ if [ "${CMD}" = 'build' ]; then
     readonly LAMBDA_LAYER_DEST_DIR="layer.out/${ENV}"
 
     printf 'Lambda Layer Source: %s\n' "${LAMBDA_LAYER_SRC_DIR}"
-    printf 'Lambda Layer Target: %s\n\n' "${LAMBDA_LAYER_DEST_DIR}"
+    printf 'Lambda Layer Target: %s\n' "${LAMBDA_LAYER_DEST_DIR}"
 
     commands=()
 
@@ -132,12 +132,11 @@ if [ "${CMD}" = 'build' ]; then
 
       # add self as a dependency
       cat < "${install_dir}/package.json"                                                         \
-        | jq ".dependencies |= .+ {\"${layer_name}\": \"../../../../src/function/layer/${dir}\"}" \
+        | jq ".dependencies |= .+ {\"${layer_name}-${ENV}\": \"../../../../src/function/layer/${dir}\"}" \
         > "${install_dir}/package-tmp.json"                                                       \
       && mv "${install_dir}/package-tmp.json" "${install_dir}/package.json"
 
-      printf '%s\n\n' "$(ls -lt "${install_dir}")"
-      printf '%s\n\n' "$(cat "${install_dir}/package.json")"
+      printf '%s\n' "$(cat "${install_dir}/package.json")"
 
       # install 'dependencies' without 'devDependencies'
       commands+=("npm --prefix ${install_dir} install --production")
@@ -146,11 +145,11 @@ if [ "${CMD}" = 'build' ]; then
 
     cmd=$(IFS=',' tmp="${commands[*]}" ; echo "${tmp//,/ && }")
 
-    printf 'Commands To Be Executed: %s\n\n' "${cmd}"
+    printf 'Commands To Be Executed: %s\n' "${cmd}"
 
     $BASH_CMD -c "${cmd}"
 
-    printf '%s\n\n' "$(find ${LAMBDA_LAYER_DEST_DIR} -maxdepth 3)"
+    printf '%s\n' "$(find ${LAMBDA_LAYER_DEST_DIR} -maxdepth 3)"
   }
 
   : 'TRANSPILE ALL .ts FILES' &&
