@@ -1,12 +1,12 @@
 cdk:
-  --app: 'APP'                   # Name of CDK application’s stack
-  --env: 'ENV'                   # Environment
-  --profile: 'AWS_PROFILE'       # Used by AWS CLI
-  --region: 'AWS_DEFAULT_REGION' # AWS Region
-  --stack: 'STACK'               # Stack Name
+  --app: 'APP'                   # name of CDK application’s stack
+  --env: 'ENV'                   # environment identifier
+  --profile: 'AWS_PROFILE'       # named profile for AWS CLI
+  --region: 'AWS_DEFAULT_REGION' # AWS region
+  --stack: 'STACK'               # stack name
 code:
-  --env: 'ENV'                   # Environment
+  --env: 'ENV'                   # environment identifier
 sam:
-  --event: 'EVENT_DATA'          # Event Data
-  --fid: 'FID'                   # Function Identifier
-  --stack: 'STACK'               # Stack Name
+  --event: 'EVENT_DATA'          # event data
+  --fid: 'FID'                   # function identifier
+  --stack: 'STACK'               # stack name
