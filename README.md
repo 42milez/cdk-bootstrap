@@ -35,56 +35,55 @@ docker-compose run --rm npm install
 ./cmd/code.sh lint
 ```
 
-#### Building Sources
+#### Building the Project
 ```
 ./cmd/code.sh build
 ```
 
-#### Deploying the CDK toolkit stack
+#### Deploying the CDK Toolkit Stack
 ```
 ./cmd/cdk.sh bootstrap
 ```
 
-#### Printing manifest
-```
-./cmd/cdk.sh list --env development --stack 'service2'
-```
-###### Available options:
-- `--env`: Environment
-- `--stack`: Stack Name (REQUIRED)
-
-#### Deploying the stacks
+#### Deploying CFn Stacks
 ```
 ./cmd/cdk.sh deploy --env development --stack 'service1,service2'
 ```
-###### Available options:
+###### Available Options:
 - `--env`: Environment
 - `--stack`: Stack Name (REQUIRED)
 
-#### Printing the CloudFormation template
+#### Listing CFn Stacks
 ```
-./cmd/cdk.sh deploy --env development --stack 'service1,service2'
+./cmd/cdk.sh list --env development
 ```
-###### Available options:
+###### Available Options:
+- `--env`: Environment
+
+#### Printing CFn Template
+```
+./cmd/cdk.sh synth --env development --stack 'service2'
+```
+###### Available Options:
 - `--env`: Environment
 - `--stack`: Stack Name (REQUIRED)
 
-#### Destroying the stacks
+#### Destroying CFn Stacks
 ```
 ./cmd/cdk.sh destroy --env development --stack 'service1,service2'
 ```
-###### Available options:
+###### Available Options:
 - `--env`: Environment
 - `--stack`: Stack Name (REQUIRED)
 
-#### Invoking Lambda function
+#### Invoking Lambda Function
 ```
 ./cmd/sam.sh --fid FUNCTION_IDENTIFIER --stack 'service2' --event 'empty.json'
 ```
 
 Note: Function identifier is mentioned in [SAM CLI](https://docs.aws.amazon.com/cdk/latest/guide/sam.html).
 
-###### Available options:
+###### Available Options:
 - `--fid`: Function Identifier (REQUIRED)
 - `--stack`: Stack Name (REQUIRED)
 - `--event`: Event Data
