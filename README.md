@@ -21,6 +21,9 @@ docker-compose run --rm npm install
 ```
 
 ## Commands
+
+⚠️ `development` is used as default when `--env` option is not specified.
+
 #### Checking Code Style
 ```
 ./cmd/code.sh lint
