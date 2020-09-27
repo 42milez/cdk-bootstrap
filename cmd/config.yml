@@ -1,8 +1,8 @@
 cli:
-  profile: '42milez'       # default profile
-  region: 'ap-northeast-1' # default region
+  profile: '42milez'              # default profile
+  region: 'ap-northeast-1'        # default region
 env:
-  development: &dev 'development'
-  staging: 'staging'
-  production: 'production'
-  default: *dev
+  development: &dev 'development' # identifier of development environment
+  staging: 'staging'              # identifier of staging environment
+  production: 'production'        # identifier of production environment
+  default: *dev                   # used as default identifier when '--env' option is not specified
