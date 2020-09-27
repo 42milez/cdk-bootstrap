@@ -5,4 +5,8 @@ cdk:
   --region: 'AWS_DEFAULT_REGION' # AWS Region
   --stack: 'STACK'               # Stack Name
 code:
-  --env: 'ENV'
+  --env: 'ENV'                   # Environment
+sam:
+  --event: 'EVENT_DATA'          # Event Data
+  --fid: 'FID'                   # Function Identifier
+  --stack: 'STACK'               # Stack Name

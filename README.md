@@ -9,8 +9,14 @@ cdk-experiment is an experimental project template based on AWS CDK. This projec
 - Multi stage support (dev/stg/prod)
 - etc.
 
+## Requirements
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [aws-sam-cli](https://github.com/aws/aws-sam-cli)
+- [jq](https://github.com/stedolan/jq)
+- [yq](https://github.com/mikefarah/yq)
+
 ## Quick Start
-⚠️ [Named profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) is required when creating CFn stack. Named profile can be specified as `cli.profile` key in `cmd/config.yml`.
+⚠️ [Named profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) is required when calling CFn's API. Named profile can be specified as `cli.profile` key in `cmd/config.yml`.
 
 ```
 docker-compose build
@@ -21,7 +27,8 @@ docker-compose run --rm npm install
 ```
 
 ## Commands
-⚠️ `development` is used as default when `--env` option is not specified.
+- ⚠️ `--env` can be specified as `development`, `staging` or `production`.
+- ⚠️ `development` is used as default when `--env` option is not specified.
 
 #### Checking Code Style
 ```
@@ -40,31 +47,44 @@ docker-compose run --rm npm install
 
 #### Printing manifest
 ```
-./cmd/cdk.sh list --env development
+./cmd/cdk.sh list --env development --stack 'service2'
 ```
 ###### Available options:
-- `--env`: either `development`, `staging` or `production`
+- `--env`: Environment
+- `--stack`: Stack Name (REQUIRED)
 
 #### Deploying the stacks
 ```
 ./cmd/cdk.sh deploy --env development --stack 'service1,service2'
 ```
 ###### Available options:
-- `--env`: either `development`, `staging` or `production`
-- `--stack`
+- `--env`: Environment
+- `--stack`: Stack Name (REQUIRED)
 
 #### Printing the CloudFormation template
 ```
 ./cmd/cdk.sh deploy --env development --stack 'service1,service2'
 ```
 ###### Available options:
-- `--env`: either `development`, `staging` or `production`
-- `--stack`
+- `--env`: Environment
+- `--stack`: Stack Name (REQUIRED)
 
 #### Destroying the stacks
 ```
 ./cmd/cdk.sh destroy --env development --stack 'service1,service2'
 ```
 ###### Available options:
-- `--env`: either `development`, `staging` or `production`
-- `--stack`
+- `--env`: Environment
+- `--stack`: Stack Name (REQUIRED)
+
+#### Invoking Lambda function
+```
+./cmd/sam.sh --fid FUNCTION_IDENTIFIER --stack 'service2' --event 'empty.json'
+```
+
+Note: Function identifier is mentioned in [SAM CLI](https://docs.aws.amazon.com/cdk/latest/guide/sam.html).
+
+###### Available options:
+- `--fid`: Function Identifier (REQUIRED)
+- `--stack`: Stack Name (REQUIRED)
+- `--event`: Event Data
