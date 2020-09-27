@@ -27,7 +27,8 @@ docker-compose run --rm npm install
 ```
 
 ## Commands
-⚠️ `development` is used as default when `--env` option is not specified.
+- ⚠️ `development` is used as default when `--env` option is not specified.
+- ⚠️ `--env` can be specified as `development`, `staging` or `production`.
 
 #### Checking Code Style
 ```
@@ -49,28 +50,37 @@ docker-compose run --rm npm install
 ./cmd/cdk.sh list --env development
 ```
 ###### Available options:
-- `--env`: either `development`, `staging` or `production`
+- `--env`: Environment
 
 #### Deploying the stacks
 ```
 ./cmd/cdk.sh deploy --env development --stack 'service1,service2'
 ```
 ###### Available options:
-- `--env`: either `development`, `staging` or `production`
-- `--stack`
+- `--env`: Environment
+- `--stack`: Stack Name (REQUIRED)
 
 #### Printing the CloudFormation template
 ```
 ./cmd/cdk.sh deploy --env development --stack 'service1,service2'
 ```
 ###### Available options:
-- `--env`: either `development`, `staging` or `production`
-- `--stack`
+- `--env`: Environment
+- `--stack`: Stack Name (REQUIRED)
 
 #### Destroying the stacks
 ```
 ./cmd/cdk.sh destroy --env development --stack 'service1,service2'
 ```
 ###### Available options:
-- `--env`: either `development`, `staging` or `production`
-- `--stack`
+- `--env`: Environment
+- `--stack`: Stack Name (REQUIRED)
+
+#### Invoking Lambda function
+```
+./cmd/sam.sh --fid 'HelloCdkFunction90393412' --stack 'service2' --event 'empty.json'
+```
+###### Available options:
+- `--fid`: Function Identifier (REQUIRED)
+- `--stack`: Stack Name (REQUIRED)
+- `--event`: Event Data
