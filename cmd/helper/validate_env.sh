@@ -2,7 +2,7 @@
 
 set -eu
 
-verify_env()
+validate_env()
 {
   local current_dir
   local development
