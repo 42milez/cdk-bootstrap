@@ -5,7 +5,7 @@
     "type": "git",
     "url": "git@github.com:42milez/cdk-experiment.git"
   },
-  "description": "Bootstrap for AWS CDK project.",
+  "description": "Experimental AWS CDK project.",
   "license": "MIT",
   "bin": {
     "cdk-experiment": "bin/cdk-experiment.js"
