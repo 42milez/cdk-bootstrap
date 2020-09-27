@@ -135,7 +135,7 @@ elif [ "${CMD}" = 'build' ]; then
 
     printf 'Commands To Be Executed: %s\n' "${cmd}"
 
-    $BASH_CMD -c "${cmd}"
+    $BASH_CMD "${cmd}"
 
     printf '%s\n' "$(find ${LAMBDA_LAYER_DEST_DIR} -maxdepth 3)"
   }

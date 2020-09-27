@@ -11,7 +11,7 @@ services:
     tty: true
   bash:
     <<: *shared
-    entrypoint: 'bash'
+    entrypoint: 'bash -c'
     volumes:
       - '.:/var/project:delegated'
   cdk:
