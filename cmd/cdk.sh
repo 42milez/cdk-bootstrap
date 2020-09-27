@@ -20,7 +20,7 @@ positional=()
 
 while [ $# -gt 0 ]; do
 {
-  opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "cdk.$1")
+  opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "cdk.$1.val")
 
   if [ -z "${opt}" ]; then
     positional+=("$1")

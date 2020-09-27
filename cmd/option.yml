@@ -15,16 +15,16 @@ cdk:
         --profile  named profile for AWS CLI
         --region   AWS region
     --stack:
-      name: STACK
+      val: STACK
       required: true
     --env:
-      name: ENV
+      val: ENV
       required: false
     --profile:
-      name: AWS_PROFILE
+      val: AWS_PROFILE
       required: false
     --region:
-      name: AWS_DEFAULT_REGION
+      val: AWS_DEFAULT_REGION
       required: false
   list:
     --help: |
@@ -33,13 +33,13 @@ cdk:
         --profile  named profile for AWS CLI
         --region   AWS region
     --env:
-      name: ENV
+      val: ENV
       required: false
     --profile:
-      name: AWS_PROFILE
+      val: AWS_PROFILE
       required: false
     --region:
-      name: AWS_DEFAULT_REGION
+      val: AWS_DEFAULT_REGION
       required: false
   synth:
     --help: |
@@ -49,16 +49,16 @@ cdk:
         --profile  named profile for AWS CLI
         --region   AWS region
     --stack:
-      name: STACK
+      val: STACK
       required: true
     --env:
-      name: ENV
+      val: ENV
       required: false
     --profile:
-      name: AWS_PROFILE
+      val: AWS_PROFILE
       required: false
     --region:
-      name: AWS_DEFAULT_REGION
+      val: AWS_DEFAULT_REGION
       required: false
   destroy:
     --help: |
@@ -68,16 +68,16 @@ cdk:
         --profile  named profile for AWS CLI
         --region   AWS region
     --stack:
-      name: STACK
+      val: STACK
       required: true
     --env:
-      name: ENV
+      val: ENV
       required: false
     --profile:
-      name: AWS_PROFILE
+      val: AWS_PROFILE
       required: false
     --region:
-      name: AWS_DEFAULT_REGION
+      val: AWS_DEFAULT_REGION
       required: false
 code:
   lint: {}
@@ -100,11 +100,11 @@ sam:
         --stack  REQUIRED: stack name
         --event  event data
     --fid:
-      name: FID
+      val: FID
       required: true
     --stack:
-      name: STACK
+      val: STACK
       required: true
     --event:
-      name: EVENT_DATA
+      val: EVENT_DATA
       required: false
