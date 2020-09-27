@@ -6,6 +6,7 @@ set -eu
 readonly PROJECT_ROOT=$(pwd)
 
 . "${PROJECT_ROOT}/cmd/helper/read_yaml.sh"
+. "${PROJECT_ROOT}/cmd/helper/validate_option.sh"
 . "${PROJECT_ROOT}/cmd/helper/verify_env.sh"
 
 #  Parse command-line options
@@ -15,7 +16,7 @@ positional=()
 
 while [ $# -gt 0 ]; do
 {
-  opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "code.$1")
+  opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "code.$1.name")
 
   # skip positional argument
   if [ -z "${opt}" ]; then
@@ -102,6 +103,8 @@ verify_env "${ENV}"
 
 if [ "${CMD}" = 'build' ]; then
 {
+  validate_option 'code' 'build'
+
   : 'PREPARE LAMBDA LAYER' &&
   {
     readonly LAMBDA_LAYER_SRC_DIR="${PROJECT_ROOT}/src/function/layer"
@@ -159,10 +162,14 @@ if [ "${CMD}" = 'build' ]; then
 }
 elif [ "${CMD}" = 'test' ]; then
 {
+  validate_option 'code' 'test'
+
   $NPX_CMD jest
 }
 elif [ "${CMD}" = 'snapshot' ]; then
 {
+  validate_option 'code' 'snapshot'
+
   $NPX_CMD jest --updateSnapshot
 }
 else

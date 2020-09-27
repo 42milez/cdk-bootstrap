@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eu
+
 verify_env()
 {
   local current_dir

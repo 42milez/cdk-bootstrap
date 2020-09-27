@@ -6,7 +6,7 @@ cdk:
       list
       synth
       destroy
-  bootstrap: # <no option>
+  bootstrap: {}
   deploy:
     --help: |
       Available Options:
@@ -15,16 +15,16 @@ cdk:
         --profile  named profile for AWS CLI
         --region   AWS region
     --stack:
-      name: 'STACK'
+      name: STACK
       required: true
     --env:
-      name: 'ENV'
+      name: ENV
       required: false
     --profile:
-      name: 'AWS_PROFILE'
+      name: AWS_PROFILE
       required: false
     --region:
-      name: 'AWS_DEFAULT_REGION'
+      name: AWS_DEFAULT_REGION
       required: false
   list:
     --help: |
@@ -33,13 +33,13 @@ cdk:
         --profile  named profile for AWS CLI
         --region   AWS region
     --env:
-      name: 'ENV'
+      name: ENV
       required: false
     --profile:
-      name: 'AWS_PROFILE'
+      name: AWS_PROFILE
       required: false
     --region:
-      name: 'AWS_DEFAULT_REGION'
+      name: AWS_DEFAULT_REGION
       required: false
   synth:
     --help: |
@@ -49,16 +49,16 @@ cdk:
         --profile  named profile for AWS CLI
         --region   AWS region
     --stack:
-      name: 'STACK'
+      name: STACK
       required: true
     --env:
-      name: 'ENV'
+      name: ENV
       required: false
     --profile:
-      name: 'AWS_PROFILE'
+      name: AWS_PROFILE
       required: false
     --region:
-      name: 'AWS_DEFAULT_REGION'
+      name: AWS_DEFAULT_REGION
       required: false
   destroy:
     --help: |
@@ -68,27 +68,29 @@ cdk:
         --profile  named profile for AWS CLI
         --region   AWS region
     --stack:
-      name: 'STACK'
+      name: STACK
       required: true
     --env:
-      name: 'ENV'
+      name: ENV
       required: false
     --profile:
-      name: 'AWS_PROFILE'
+      name: AWS_PROFILE
       required: false
     --region:
-      name: 'AWS_DEFAULT_REGION'
+      name: AWS_DEFAULT_REGION
       required: false
 code:
-  lint: # <no option>
-  test: # <no option>
-  snapshot: # <no option>
+  lint: {}
+  test: {}
+  snapshot: {}
   build:
-    --help: |
-      Available Options:
-        --env  environment identifier
+    --help:
+      val: |
+        Available Options:
+          --env  environment identifier
+      required: false
     --env:
-      name: 'ENV'
+      val: ENV
       required: false
 sam:
   invoke:
@@ -98,11 +100,11 @@ sam:
         --stack  REQUIRED: stack name
         --event  event data
     --fid:
-      name: 'FID'
+      name: FID
       required: true
     --stack:
-      name: 'STACK'
+      name: STACK
       required: true
     --event:
-      name: 'EVENT_DATA'
+      name: EVENT_DATA
       required: false
