@@ -19,14 +19,12 @@ while [ $# -gt 0 ]; do
 {
   opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "code.$1.val")
 
-  # skip positional argument
   if [ -z "${opt}" ]; then
     positional+=("$1")
     shift
     continue
   fi
 
-  # define variable
   eval "readonly ${opt}=$2"
 
   shift

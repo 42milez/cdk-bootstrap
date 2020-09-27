@@ -1,19 +1,23 @@
 cdk:
-  --help: |
-    Available Commands:
-      bootstrap
-      deploy
-      list
-      synth
-      destroy
+  --help:
+    val: |
+      Available Commands:
+        bootstrap
+        deploy
+        list
+        synth
+        destroy
+    required: false
   bootstrap: {}
   deploy:
-    --help: |
-      Available Options:
-        --stack    REQUIRED: stack name
-        --env      environment identifier
-        --profile  named profile for AWS CLI
-        --region   AWS region
+    --help:
+      val: |
+        Available Options:
+          --stack    REQUIRED: stack name
+          --env      environment identifier
+          --profile  named profile for AWS CLI
+          --region   AWS region
+      required: false
     --stack:
       val: STACK
       required: true
@@ -27,14 +31,16 @@ cdk:
       val: AWS_DEFAULT_REGION
       required: false
   list:
-    --help: |
-      Available Options:
-        --env      environment identifier
-        --profile  named profile for AWS CLI
-        --region   AWS region
+    --help:
+      val: |
+        Available Options:
+          --env      environment identifier
+          --profile  named profile for AWS CLI
+          --region   AWS region
+      required: false
     --env:
       val: ENV
-      required: false
+      required: true
     --profile:
       val: AWS_PROFILE
       required: false
@@ -42,12 +48,14 @@ cdk:
       val: AWS_DEFAULT_REGION
       required: false
   synth:
-    --help: |
-      Available Options:
-        --stack    REQUIRED: stack name
-        --env      environment identifier
-        --profile  named profile for AWS CLI
-        --region   AWS region
+    --help:
+      val: |
+        Available Options:
+          --stack    REQUIRED: stack name
+          --env      environment identifier
+          --profile  named profile for AWS CLI
+          --region   AWS region
+      required: false
     --stack:
       val: STACK
       required: true
@@ -61,12 +69,14 @@ cdk:
       val: AWS_DEFAULT_REGION
       required: false
   destroy:
-    --help: |
-      Available Options:
-        --stack    REQUIRED: stack name
-        --env      environment identifier
-        --profile  named profile for AWS CLI
-        --region   AWS region
+    --help:
+      val: |
+        Available Options:
+          --stack    REQUIRED: stack name
+          --env      environment identifier
+          --profile  named profile for AWS CLI
+          --region   AWS region
+      required: false
     --stack:
       val: STACK
       required: true
@@ -94,11 +104,13 @@ code:
       required: false
 sam:
   invoke:
-    --help: |
-      Available Options:
-        --fid    REQUIRED: function identifier
-        --stack  REQUIRED: stack name
-        --event  event data
+    --help:
+      val: |
+        Available Options:
+          --fid    REQUIRED: function identifier
+          --stack  REQUIRED: stack name
+          --event  event data
+      required: false
     --fid:
       val: FID
       required: true

@@ -22,12 +22,14 @@ while [ $# -gt 0 ]; do
 {
   opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "cdk.$1.val")
 
+  # skip positional argument
   if [ -z "${opt}" ]; then
     positional+=("$1")
     shift
     continue
   fi
 
+  # define constant
   eval "readonly ${opt}=$2"
 
   shift
@@ -59,7 +61,11 @@ fi
 
 validate_env "${ENV}"
 
-if [ -n "${STACK+UNDEFINED}" ]; then
+if [ -z "${STACK+UNDEFINED}" ]; then
+{
+  : # do nothing
+}
+else
 {
   stacks=()
 
@@ -86,7 +92,7 @@ if [ "${CMD}" = 'bootstrap' ]; then
 {
   validate_option 'cdk' 'bootstrap'
 
-  $CDK_CMD bootstrap -o "${CDK_OUT_DIR}/bootstrap"
+  $CDK_CMD bootstrap -o "${CDK_OUT_DIR}/bootstrap" -c "env=${ENV}"
 }
 elif [ "${CMD}" = 'deploy' ]; then
 {
