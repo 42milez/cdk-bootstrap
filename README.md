@@ -9,6 +9,12 @@ cdk-experiment is an experimental project template based on AWS CDK. This projec
 - Multi stage support (dev/stg/prod)
 - etc.
 
+## Requirements
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [aws-sam-cli](https://github.com/aws/aws-sam-cli)
+- [jq](https://github.com/stedolan/jq)
+- [yq](https://github.com/mikefarah/yq)
+
 ## Quick Start
 ⚠️ [Named profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) is required when creating CFn stack. Named profile can be specified as `cli.profile` key in `cmd/config.yml`.
 
