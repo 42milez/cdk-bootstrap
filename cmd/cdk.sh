@@ -110,20 +110,10 @@ while read -r s; do
 }
 done < <(echo "$(IFS=',' tmp=($(echo "${STACK}")) ; printf '%s\n' "${tmp[@]}")")
 
-synth()
-{
-  local stacks_=$1
-
-  # shellcheck disable=SC2086
-  $CDK_CMD synth -o "${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" ${stacks_}
-}
-
 if [ "${CMD}" = 'deploy' ]; then
 {
   # shellcheck disable=SC2086
   $CDK_CMD deploy -o "${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" ${stacks[*]}
-
-  synth "${stacks[*]}"
 }
 elif [ "${CMD}" = 'destroy' ]; then
 {
@@ -132,7 +122,8 @@ elif [ "${CMD}" = 'destroy' ]; then
 }
 elif [ "${CMD}" = 'synth' ]; then
 {
-  synth "${stacks[*]}"
+  # shellcheck disable=SC2086
+  $CDK_CMD synth -o "${CDK_OUT_DIR}/${ENV}" -c "env=${ENV}" ${stacks[*]}
 }
 else
 {
