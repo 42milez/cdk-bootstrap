@@ -21,7 +21,6 @@ docker-compose run --rm npm install
 ```
 
 ## Commands
-
 ⚠️ `development` is used as default when `--env` option is not specified.
 
 #### Checking Code Style
@@ -63,7 +62,6 @@ docker-compose run --rm npm install
 - `--stack`
 
 #### Destroying the stacks
-
 ```
 ./cmd/cdk.sh destroy --env development --stack 'service1,service2'
 ```
