@@ -1,14 +1,20 @@
-const fs = require('fs');
+import * as fs from 'fs';
 
 const handler = async function (event: any, context: any) {
-  fs.readdir('/opt/nodejs', function(err: any, items: string[]) {
-    for (let i=0; i<items.length; i++) {
+  fs.readdir('/opt/nodejs', function (err: any, items: string[]) {
+    if (err) {
+      console.error(err);
+    }
+    for (let i = 0; i < items.length; i++) {
       console.log(items[i]);
     }
   });
 
-  fs.readdir('/opt/nodejs/node_modules', function(err: any, items: string[]) {
-    for (let i=0; i<items.length; i++) {
+  fs.readdir('/opt/nodejs/node_modules', function (err: any, items: string[]) {
+    if (err) {
+      console.error(err);
+    }
+    for (let i = 0; i < items.length; i++) {
       console.log(items[i]);
     }
   });
