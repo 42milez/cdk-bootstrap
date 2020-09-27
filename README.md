@@ -45,45 +45,45 @@ docker-compose run --rm npm install
 ./cmd/cdk.sh bootstrap
 ```
 
-#### Deploying CFn Stacks
+#### Deploying the CFn Stacks
 ```
 ./cmd/cdk.sh deploy --env development --stack 'service1,service2'
 ```
-###### Available Options:
+###### available options:
 - `--env`: Environment
 - `--stack`: Stack Name (REQUIRED)
 
-#### Listing CFn Stacks
+#### Listing the CFn Stacks
 ```
 ./cmd/cdk.sh list --env development
 ```
-###### Available Options:
+###### available options:
 - `--env`: Environment
 
-#### Printing CFn Template
+#### Printing the CFn Template
 ```
 ./cmd/cdk.sh synth --env development --stack 'service2'
 ```
-###### Available Options:
+###### available options:
 - `--env`: Environment
 - `--stack`: Stack Name (REQUIRED)
 
-#### Destroying CFn Stacks
+#### Destroying the CFn Stacks
 ```
 ./cmd/cdk.sh destroy --env development --stack 'service1,service2'
 ```
-###### Available Options:
+###### available options:
 - `--env`: Environment
 - `--stack`: Stack Name (REQUIRED)
 
-#### Invoking Lambda Function
+#### Invoking a Lambda Function
 ```
 ./cmd/sam.sh --fid FUNCTION_IDENTIFIER --stack 'service2' --event 'empty.json'
 ```
 
 Note: Function identifier is mentioned in [SAM CLI](https://docs.aws.amazon.com/cdk/latest/guide/sam.html).
 
-###### Available Options:
+###### available options:
 - `--fid`: Function Identifier (REQUIRED)
 - `--stack`: Stack Name (REQUIRED)
 - `--event`: Event Data
