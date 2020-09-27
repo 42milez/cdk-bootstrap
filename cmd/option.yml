@@ -1,12 +1,51 @@
 cdk:
-  --app: 'APP'                   # name of CDK application’s stack
-  --env: 'ENV'                   # environment identifier
-  --profile: 'AWS_PROFILE'       # named profile for AWS CLI
-  --region: 'AWS_DEFAULT_REGION' # AWS region
-  --stack: 'STACK'               # stack name
+  bootstrap:                       # no option
+  deploy:
+    --stack: 'STACK'               # stack name
+      required: true
+    --env: 'ENV'                   # environment identifier
+      required: false
+    --profile: 'AWS_PROFILE'       # named profile for AWS CLI
+      required: false
+    --region: 'AWS_DEFAULT_REGION' # AWS region
+      required: false
+  list:
+    --env: 'ENV'
+      required: false
+    --profile: 'AWS_PROFILE'
+      required: false
+    --region: 'AWS_DEFAULT_REGION'
+      required: false
+  synth:
+    --stack: 'STACK'
+      required: true
+    --env: 'ENV'
+      required: false
+    --profile: 'AWS_PROFILE'
+      required: false
+    --region: 'AWS_DEFAULT_REGION'
+      required: false
+  destroy:
+    --stack: 'STACK'
+      required: true
+    --env: 'ENV'
+      required: false
+    --profile: 'AWS_PROFILE'
+      required: false
+    --region: 'AWS_DEFAULT_REGION'
+      required: false
 code:
-  --env: 'ENV'                   # environment identifier
+  lint:                   # no option
+  test:                   # no option
+  snapshot:               # no option
+  build:
+    --env: 'ENV'
+      required: false
 sam:
-  --event: 'EVENT_DATA'          # event data
-  --fid: 'FID'                   # function identifier
-  --stack: 'STACK'               # stack name
+  invoke:
+    --fid: 'FID'          # function identifier
+      required: true
+    --stack: 'STACK'
+      required: true
+    --event: 'EVENT_DATA' # event data
+      required: false
