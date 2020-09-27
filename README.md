@@ -78,8 +78,11 @@ docker-compose run --rm npm install
 
 #### Invoking Lambda function
 ```
-./cmd/sam.sh --fid 'HelloCdkFunction90393412' --stack 'service2' --event 'empty.json'
+./cmd/sam.sh --fid FUNCTION_IDENTIFIER --stack 'service2' --event 'empty.json'
 ```
+
+Note: Function identifier is mentioned in [SAM CLI](https://docs.aws.amazon.com/cdk/latest/guide/sam.html).
+
 ###### Available options:
 - `--fid`: Function Identifier (REQUIRED)
 - `--stack`: Stack Name (REQUIRED)
