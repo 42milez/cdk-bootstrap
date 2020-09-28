@@ -2,34 +2,35 @@ version: '3.8'
 services:
   base:
     build:
-      context: '.'
-      dockerfile: './docker/Dockerfile'
-    image: 'base-cdk-experiment:latest'
+      context: .
+      dockerfile: ./docker/Dockerfile
+    image: base-cdk-experiment:latest
   shared: &shared
-    image: 'base-cdk-experiment:latest'
+    image: base-cdk-experiment:latest
     stdin_open: true
     tty: true
-  bash:
-    <<: *shared
-    entrypoint: 'bash -c'
     volumes:
       - '.:/var/project:delegated'
+      - 'log:/var/log/docker:delegated'
+  bash:
+    <<: *shared
+    entrypoint: bash -c
   cdk:
     <<: *shared
-    entrypoint: 'npx cdk'
+    entrypoint: npx cdk
     volumes:
       - '~/.aws:/root/.aws'
       - '.:/var/project'
+      - 'log:/var/log/docker:delegated'
   npm:
     <<: *shared
-    entrypoint: 'npm'
-    volumes:
-      - '.:/var/project:delegated'
+    entrypoint: npm
   npx:
     <<: *shared
-    entrypoint: 'npx'
-    volumes:
-      - '.:/var/project:delegated'
+    entrypoint: npx
+volumes:
+  log:
+    driver: local
 
 # References:
 # - Performance tuning for volume mounts (shared filesystems)
