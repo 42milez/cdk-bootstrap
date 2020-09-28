@@ -19,12 +19,6 @@ install:
   # Install Node Packages
   - npm ci
 before_script:
-  # check bash
-  - type bash
-  - bash --version
-  # check bats
-  - type bats
-  - bats --version
   # check jq
   - type jq
   - jq --version
