@@ -17,6 +17,11 @@ positional=("$1") && shift
 
 while [ $# -gt 0 ]; do
 {
+  if [ "$1" = '--help' ]; then
+    read_yaml "${PROJECT_ROOT}/cmd/option.yml" "code.${positional[0]}.--help.val"
+    exit 0
+  fi
+
   opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "code.${positional[0]}.$1.val")
 
   if [ -z "${opt}" ]; then
