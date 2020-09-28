@@ -56,7 +56,7 @@ readonly DOCKER_WORK_DIR='/var/project'
 readonly CMD=$1
 
 if "${CI=false}"; then
-  readonly BASH_CMD='bash'
+  readonly BASH_CMD='bash -c'
   readonly NPX_CMD='npx'
 else
   readonly BASH_CMD='docker-compose run --rm bash'
