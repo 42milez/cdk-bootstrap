@@ -8,6 +8,7 @@ RUN apk update          \
     bats                \
     build-base          \
     curl                \
+    jq                  \
   && rm -rf '/var/cache/apk/*'
 
 ARG YQ_VERSION='3.4.0'
