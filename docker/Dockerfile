@@ -8,13 +8,13 @@ RUN apk update          \
     bats                \
     build-base          \
     curl                \
+    jq                  \
   && rm -rf '/var/cache/apk/*'
 
-ARG YQ_RELEASE='https://github.com/mikefarah/yq/releases/download/3.4.0/yq_linux_amd64'
+ARG YQ_VERSION='3.4.0'
+ARG YQ_RELEASE="https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64"
 ARG YQ_INSTALL_PATH='/usr/local/bin/yq'
-
-RUN curl -fsSL $YQ_RELEASE -o $YQ_INSTALL_PATH && chmod 0755 $YQ_INSTALL_PATH
+RUN curl -fsSL "${YQ_RELEASE}" -o "${YQ_INSTALL_PATH}" && chmod 0755 "${YQ_INSTALL_PATH}"
 
 ARG PROJECT_ROOT='/var/project'
-
 WORKDIR $PROJECT_ROOT

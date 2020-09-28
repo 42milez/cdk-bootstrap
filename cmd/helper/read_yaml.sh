@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eu
+
 read_yaml()
 {
   local path=$1

@@ -1,12 +1,122 @@
 cdk:
-  --app: 'APP'                   # name of CDK application’s stack
-  --env: 'ENV'                   # environment identifier
-  --profile: 'AWS_PROFILE'       # named profile for AWS CLI
-  --region: 'AWS_DEFAULT_REGION' # AWS region
-  --stack: 'STACK'               # stack name
+  --help:
+    val: |
+      Available Commands:
+        bootstrap
+        deploy
+        list
+        synth
+        destroy
+    required: false
+  bootstrap: {}
+  deploy:
+    --help:
+      val: |
+        Available Options:
+          --stack    REQUIRED: stack name
+          --env      environment identifier
+          --profile  named profile for AWS CLI
+          --region   AWS region
+      required: false
+    --stack:
+      val: STACK
+      required: true
+    --env:
+      val: ENV
+      required: false
+    --profile:
+      val: AWS_PROFILE
+      required: false
+    --region:
+      val: AWS_DEFAULT_REGION
+      required: false
+  list:
+    --help:
+      val: |
+        Available Options:
+          --env      environment identifier
+          --profile  named profile for AWS CLI
+          --region   AWS region
+      required: false
+    --env:
+      val: ENV
+      required: true
+    --profile:
+      val: AWS_PROFILE
+      required: false
+    --region:
+      val: AWS_DEFAULT_REGION
+      required: false
+  synth:
+    --help:
+      val: |
+        Available Options:
+          --stack    REQUIRED: stack name
+          --env      environment identifier
+          --profile  named profile for AWS CLI
+          --region   AWS region
+      required: false
+    --stack:
+      val: STACK
+      required: true
+    --env:
+      val: ENV
+      required: false
+    --profile:
+      val: AWS_PROFILE
+      required: false
+    --region:
+      val: AWS_DEFAULT_REGION
+      required: false
+  destroy:
+    --help:
+      val: |
+        Available Options:
+          --stack    REQUIRED: stack name
+          --env      environment identifier
+          --profile  named profile for AWS CLI
+          --region   AWS region
+      required: false
+    --stack:
+      val: STACK
+      required: true
+    --env:
+      val: ENV
+      required: false
+    --profile:
+      val: AWS_PROFILE
+      required: false
+    --region:
+      val: AWS_DEFAULT_REGION
+      required: false
 code:
-  --env: 'ENV'                   # environment identifier
+  lint: {}
+  test: {}
+  snapshot: {}
+  build:
+    --help:
+      val: |
+        Available Options:
+          --env  environment identifier
+      required: false
+    --env:
+      val: ENV
+      required: false
 sam:
-  --event: 'EVENT_DATA'          # event data
-  --fid: 'FID'                   # function identifier
-  --stack: 'STACK'               # stack name
+  invoke:
+    --help:
+      val: |
+        Available Options:
+          --fid    REQUIRED: function identifier
+          --stack  REQUIRED: stack name
+          --event  event data
+      required: false
+    --fid:
+      val: FID
+      required: true
+    --stack:
+      val: STACK
+      required: true
+    --event:
+      val: EVENT_DATA
+      required: false

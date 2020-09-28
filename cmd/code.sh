@@ -6,25 +6,25 @@ set -eu
 readonly PROJECT_ROOT=$(pwd)
 
 . "${PROJECT_ROOT}/cmd/helper/read_yaml.sh"
-. "${PROJECT_ROOT}/cmd/helper/verify_env.sh"
+. "${PROJECT_ROOT}/cmd/helper/validate_env.sh"
+. "${PROJECT_ROOT}/cmd/helper/validate_option.sh"
 
-#  Parse command-line options
+# --------------------------------------------------
+#  Parse Command-Line Options
 # --------------------------------------------------
 
-positional=()
+positional=("$1") && shift
 
 while [ $# -gt 0 ]; do
 {
-  opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "code.$1")
+  opt=$(read_yaml "${PROJECT_ROOT}/cmd/option.yml" "code.${positional[0]}.$1.val")
 
-  # skip positional argument
   if [ -z "${opt}" ]; then
     positional+=("$1")
     shift
     continue
   fi
 
-  # define variable
   eval "readonly ${opt}=$2"
 
   shift
@@ -34,34 +34,34 @@ done
 
 set -- "${positional[@]}"
 
-#  Set defaults
+# --------------------------------------------------
+#  Setup
 # --------------------------------------------------
 
 if [ -z "${ENV+UNDEFINED}" ]; then
-{
   readonly ENV=$(read_yaml "${PROJECT_ROOT}/cmd/config.yml" 'env.development')
-}
 fi
 
-#  Command definitions
+if [ -z "${ENV+UNDEFINED}" ]; then
+  readonly ENV='development'
+fi
+
+validate_env "${ENV}"
+
+# --------------------------------------------------
+#  Command Definitions
 # --------------------------------------------------
 
 readonly DOCKER_WORK_DIR='/var/project'
 readonly CMD=$1
 
 if "${CI=false}"; then
-{
-  readonly BASH_CMD='bash'
+  readonly BASH_CMD='bash -c'
   readonly NPX_CMD='npx'
-}
 else
-{
   readonly BASH_CMD='docker-compose run --rm bash'
   readonly NPX_CMD='docker-compose run --rm npx'
-}
 fi
-
-# LINT
 
 if [ "${CMD}" = 'lint' ]; then
 {
@@ -85,23 +85,11 @@ if [ "${CMD}" = 'lint' ]; then
 
   # shellcheck disable=SC2086
   $NPX_CMD eslint --fix ${targets[*]}
-
-  exit 0
 }
-fi
-
-# BUILD / TEST / SNAPSHOT
-
-if [ -z "${ENV+UNDEFINED}" ]; then
+elif [ "${CMD}" = 'build' ]; then
 {
-  readonly ENV='development'
-}
-fi
+  validate_option 'code' 'build'
 
-verify_env "${ENV}"
-
-if [ "${CMD}" = 'build' ]; then
-{
   : 'PREPARE LAMBDA LAYER' &&
   {
     readonly LAMBDA_LAYER_SRC_DIR="${PROJECT_ROOT}/src/function/layer"
@@ -147,7 +135,7 @@ if [ "${CMD}" = 'build' ]; then
 
     printf 'Commands To Be Executed: %s\n' "${cmd}"
 
-    $BASH_CMD -c "${cmd}"
+    $BASH_CMD "${cmd}"
 
     printf '%s\n' "$(find ${LAMBDA_LAYER_DEST_DIR} -maxdepth 3)"
   }
@@ -159,14 +147,16 @@ if [ "${CMD}" = 'build' ]; then
 }
 elif [ "${CMD}" = 'test' ]; then
 {
+  validate_option 'code' 'test'
+
   $NPX_CMD jest
 }
 elif [ "${CMD}" = 'snapshot' ]; then
 {
+  validate_option 'code' 'snapshot'
+
   $NPX_CMD jest --updateSnapshot
 }
 else
-{
   echo "invalid command: ${CMD} is not defined"
-}
 fi

@@ -1,12 +1,13 @@
 #!/bin/bash
 
-verify_env()
+set -eu
+
+validate_env()
 {
   local current_dir
   local development
   local staging
   local production
-
   current_dir="$(pwd)"
   development=$(cat <"${current_dir}/cmd/config.yml" | yq r - 'env.development')
   staging=$(cat <"${current_dir}/cmd/config.yml" | yq r - 'env.staging')

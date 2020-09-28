@@ -10,7 +10,7 @@ set -eu
 readonly PROJECT_ROOT=$(pwd)
 
 . "${PROJECT_ROOT}/cmd/helper/read_yaml.sh"
-. "${PROJECT_ROOT}/cmd/helper/verify_env.sh"
+. "${PROJECT_ROOT}/cmd/helper/validate_env.sh"
 
 #  Parse command-line options
 # --------------------------------------------------
