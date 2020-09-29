@@ -6,7 +6,7 @@ cdk-experiment is an experimental project template based on AWS CDK. This projec
 ## Features
 - Multi CFn stack support
 - Multi Lambda layer support
-- Multi stage support (dev/stg/prod)
+- Multi environment support (dev/stg/prod)
 - etc.
 
 ## Requirements
