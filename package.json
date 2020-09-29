@@ -30,6 +30,7 @@
     "aws-cdk": "^1.64.0",
     "base-layer-1-cdk-experiment-development": "file:./src/function/layer/base1",
     "base-layer-2-cdk-experiment-development": "file:./src/function/layer/base2",
+    "bats": "^1.2.1",
     "eslint": "^7.9.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
